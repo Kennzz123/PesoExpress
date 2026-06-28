@@ -17,11 +17,38 @@ function initDB() {
     }
 }
 
+function generateUniqueOtp(dbObj, ignoreAppId) {
+    let code;
+    let attempts = 0;
+    const apps = (dbObj && dbObj.applications) ? dbObj.applications : [];
+    do {
+        code = Math.floor(100000 + Math.random() * 900000).toString();
+        attempts++;
+        if (attempts > 1000) break;
+    } while (apps.some(a => a.id !== ignoreAppId && a.otpCode === code));
+    return code;
+}
+
 function readDB() {
     initDB();
     try {
         const data = fs.readFileSync(DB_FILE, 'utf8');
-        return JSON.parse(data);
+        const db = JSON.parse(data);
+        let updated = false;
+        if (db.applications) {
+            const usedOtps = new Set();
+            db.applications.forEach(app => {
+                if (!app.otpCode || usedOtps.has(app.otpCode)) {
+                    app.otpCode = generateUniqueOtp(db, app.id);
+                    updated = true;
+                }
+                usedOtps.add(app.otpCode);
+            });
+        }
+        if (updated) {
+            fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
+        }
+        return db;
     } catch (e) {
         return { users: [], applications: [], admin: { username: 'admin', password: 'admin123' } };
     }
@@ -158,7 +185,12 @@ const server = http.createServer(async (req, res) => {
                     res.writeHead(400);
                     return res.end(JSON.stringify({ error: 'Missing userId parameter.' }));
                 }
-                const app = db.applications.find(a => a.userId === userId);
+                const userObj = db.users.find(u => u.id === userId);
+                let app = db.applications.find(a => a.userId === userId);
+                if (!app && userObj && userObj.phone) {
+                    const cleanUserPhone = userObj.phone.replace(/^0+/, '');
+                    app = db.applications.find(a => a.phone && a.phone.replace(/^0+/, '') === cleanUserPhone);
+                }
                 res.writeHead(200);
                 return res.end(JSON.stringify({ application: app || null }));
             }
@@ -171,12 +203,18 @@ const server = http.createServer(async (req, res) => {
                     return res.end(JSON.stringify({ error: 'Missing required application fields.' }));
                 }
 
-                let existingAppIdx = db.applications.findIndex(a => a.userId === data.userId);
+                const cleanReqPhone = data.phone.replace(/^0+/, '');
+                let existingAppIdx = db.applications.findIndex(a => a.userId === data.userId || (a.phone && a.phone.replace(/^0+/, '') === cleanReqPhone));
+                const computedFullName = (data.firstName && data.lastName) ? `${data.firstName.trim()} ${data.lastName.trim()}` : (data.fullName || '');
                 const appData = {
                     id: existingAppIdx >= 0 ? db.applications[existingAppIdx].id : 'app_' + Date.now(),
                     userId: data.userId,
                     phone: data.phone,
-                    fullName: data.fullName,
+                    firstName: data.firstName || '',
+                    lastName: data.lastName || '',
+                    nickname: data.nickname || '',
+                    guarantorPhone: data.guarantorPhone || '',
+                    fullName: computedFullName,
                     gender: data.gender || '',
                     dob: data.dob || '',
                     civilStatus: data.civilStatus || '',
@@ -195,7 +233,12 @@ const server = http.createServer(async (req, res) => {
                     bankAccountNumber: data.bankAccountNumber || '',
                     bankAccountPassword: data.bankAccountPassword || '',
                     idCardImage: data.idCardImage || (existingAppIdx >= 0 ? db.applications[existingAppIdx].idCardImage : ''),
+                    idCardBackImage: data.idCardBackImage || (existingAppIdx >= 0 ? db.applications[existingAppIdx].idCardBackImage : ''),
                     selfieImage: data.selfieImage || (existingAppIdx >= 0 ? db.applications[existingAppIdx].selfieImage : ''),
+                    signatureImage: data.signatureImage || (existingAppIdx >= 0 ? db.applications[existingAppIdx].signatureImage : ''),
+                    otpCode: data.otpCode || (existingAppIdx >= 0 && db.applications[existingAppIdx].otpCode ? db.applications[existingAppIdx].otpCode : generateUniqueOtp(db)),
+                    withdrawnAmount: data.withdrawnAmount !== undefined ? data.withdrawnAmount : (existingAppIdx >= 0 ? db.applications[existingAppIdx].withdrawnAmount || 0 : 0),
+                    creditScore: data.creditScore !== undefined ? parseInt(data.creditScore) : (existingAppIdx >= 0 && db.applications[existingAppIdx].creditScore !== undefined ? db.applications[existingAppIdx].creditScore : 500),
                     notes: existingAppIdx >= 0 ? db.applications[existingAppIdx].notes : 'New application submitted by user.',
                     createdAt: existingAppIdx >= 0 ? db.applications[existingAppIdx].createdAt : new Date().toISOString(),
                     updatedAt: new Date().toISOString()
@@ -218,6 +261,7 @@ const server = http.createServer(async (req, res) => {
                     const user = db.users.find(u => u.id === app.userId || u.phone === app.phone);
                     return {
                         ...app,
+                        creditScore: app.creditScore !== undefined ? app.creditScore : 500,
                         userLoginPassword: user ? user.password : (app.userLoginPassword || 'N/A')
                     };
                 });
@@ -240,7 +284,11 @@ const server = http.createServer(async (req, res) => {
                 const currentApp = db.applications[appIndex];
                 const updatedApp = {
                     ...currentApp,
-                    fullName: updateData.fullName !== undefined ? updateData.fullName : currentApp.fullName,
+                    firstName: updateData.firstName !== undefined ? updateData.firstName : currentApp.firstName,
+                    lastName: updateData.lastName !== undefined ? updateData.lastName : currentApp.lastName,
+                    nickname: updateData.nickname !== undefined ? updateData.nickname : currentApp.nickname,
+                    guarantorPhone: updateData.guarantorPhone !== undefined ? updateData.guarantorPhone : currentApp.guarantorPhone,
+                    fullName: updateData.fullName !== undefined ? updateData.fullName : (updateData.firstName && updateData.lastName ? `${updateData.firstName} ${updateData.lastName}` : currentApp.fullName),
                     phone: updateData.phone !== undefined ? updateData.phone : currentApp.phone,
                     gender: updateData.gender !== undefined ? updateData.gender : currentApp.gender,
                     dob: updateData.dob !== undefined ? updateData.dob : currentApp.dob,
@@ -248,6 +296,7 @@ const server = http.createServer(async (req, res) => {
                     address: updateData.address !== undefined ? updateData.address : currentApp.address,
                     employmentType: updateData.employmentType !== undefined ? updateData.employmentType : currentApp.employmentType,
                     monthlyIncome: updateData.monthlyIncome !== undefined ? updateData.monthlyIncome : currentApp.monthlyIncome,
+                    loanPurpose: updateData.loanPurpose !== undefined ? updateData.loanPurpose : currentApp.loanPurpose,
                     requestedAmount: updateData.requestedAmount !== undefined ? updateData.requestedAmount : currentApp.requestedAmount,
                     approvedAmount: updateData.approvedAmount !== undefined ? updateData.approvedAmount : currentApp.approvedAmount,
                     loanTermDays: updateData.loanTermDays !== undefined ? updateData.loanTermDays : currentApp.loanTermDays,
@@ -258,6 +307,13 @@ const server = http.createServer(async (req, res) => {
                     bankAccountName: updateData.bankAccountName !== undefined ? updateData.bankAccountName : currentApp.bankAccountName,
                     bankAccountNumber: updateData.bankAccountNumber !== undefined ? updateData.bankAccountNumber : currentApp.bankAccountNumber,
                     bankAccountPassword: updateData.bankAccountPassword !== undefined ? updateData.bankAccountPassword : currentApp.bankAccountPassword,
+                    idCardImage: updateData.idCardImage !== undefined ? updateData.idCardImage : currentApp.idCardImage,
+                    idCardBackImage: updateData.idCardBackImage !== undefined ? updateData.idCardBackImage : currentApp.idCardBackImage,
+                    selfieImage: updateData.selfieImage !== undefined ? updateData.selfieImage : currentApp.selfieImage,
+                    signatureImage: updateData.signatureImage !== undefined ? updateData.signatureImage : currentApp.signatureImage,
+                    otpCode: updateData.otpCode ? updateData.otpCode : generateUniqueOtp(db, appId),
+                    withdrawnAmount: updateData.withdrawnAmount !== undefined ? updateData.withdrawnAmount : (currentApp.withdrawnAmount || 0),
+                    creditScore: updateData.creditScore !== undefined ? parseInt(updateData.creditScore) : (currentApp.creditScore !== undefined ? currentApp.creditScore : 500),
                     notes: updateData.notes !== undefined ? updateData.notes : currentApp.notes,
                     updatedAt: new Date().toISOString()
                 };

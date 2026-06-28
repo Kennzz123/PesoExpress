@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Host Portal</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2300b359'/><circle cx='50' cy='50' r='38' fill='%23ffcc00'/><text x='50' y='67' font-size='50' font-weight='900' text-anchor='middle' fill='%23004c99'>₱</text></svg>">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=10.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body style="background-color: #f1f5f9;">
@@ -13,20 +13,20 @@
     <!-- Host Admin Navbar -->
     <nav class="admin-nav-bar">
         <a href="/admin" class="admin-brand-logo">
-            🛡️ Host <span>Control Dashboard</span>
+            Host <span>Control Dashboard</span>
         </a>
         <div class="admin-nav-actions">
-            <a href="/" class="btn-host-portal">📱 Go to User Portal</a>
-            <button id="adminLogoutBtn" class="btn-host-logout" style="display: none;" onclick="adminLogout()">🚪 Host Logout</button>
+            <a href="/" class="btn-host-portal">Go to User Portal</a>
+            <button id="adminLogoutBtn" class="btn-host-logout" style="display: none;" onclick="adminLogout()">Host Logout</button>
         </div>
     </nav>
 
-    <main class="main-container" style="max-width: 1200px;">
+    <main class="main-container" style="max-width: 1200px; margin: 0 auto; padding: 0 1rem;">
 
-        <!-- HOST LOGIN SECTION -->
-        <section id="adminLoginSection" class="auth-wrapper" style="margin-top: 4rem;">
+        <!-- HOST LOGIN SECTION (PERFECTLY CENTERED) -->
+        <section id="adminLoginSection" class="auth-wrapper" style="max-width: 580px; margin: 4rem auto; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
             <div class="auth-header">
-                <h2>Host Account Authentication 🔑</h2>
+                <h2>Host Account Authentication</h2>
                 <p>Enter administrative host username and password to control and edit all user loan records.</p>
             </div>
             <form onsubmit="handleAdminLogin(event)">
@@ -40,7 +40,7 @@
                 </div>
                 <div id="adminLoginError" style="color: var(--danger-color); font-size: 0.9rem; margin-bottom: 1rem; display: none;"></div>
                 <button type="submit" class="btn btn-primary btn-block">Log In as Host Manager</button>
-                <button type="button" class="btn btn-outline btn-block" style="margin-top: 0.75rem;" onclick="openCredsModal()">🔑 Change / Reset Host Password</button>
+                <button type="button" class="btn btn-outline btn-block" style="margin-top: 0.75rem;" onclick="openCredsModal()">Change / Reset Host Password</button>
             </form>
         </section>
 
@@ -55,8 +55,8 @@
                     <p style="color: var(--text-muted);">View, inspect, and edit all submitted applicant information and verification photos.</p>
                 </div>
                 <div style="display: flex; gap: 0.75rem;">
-                    <button class="btn btn-outline" onclick="openCredsModal()">🔑 Change Password</button>
-                    <button class="btn btn-primary" onclick="loadApplications()">🔄 Refresh List</button>
+                    <button class="btn btn-outline" onclick="openCredsModal()">Change Password</button>
+                    <button class="btn btn-primary" onclick="loadApplications()">Refresh List</button>
                 </div>
             </div>
 
@@ -79,15 +79,99 @@
                 </div>
             </div>
 
+            <!-- HOST ADMINISTRATOR PROFILE CARD -->
+            <div style="background: white; padding: 1.25rem 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="width: 54px; height: 54px; border-radius: 50%; background: #00b359; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 800; border: 3px solid #d1fae5;">H</div>
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <h3 style="margin: 0; font-size: 1.15rem; font-weight: 800; color: var(--text-dark);">Host Manager Profile</h3>
+                            <span style="background: #d1fae5; color: #047857; font-size: 0.72rem; font-weight: 800; padding: 0.15rem 0.6rem; border-radius: 12px; border: 1px solid #a7f3d0;">ONLINE SUPERADMIN</span>
+                        </div>
+                        <p style="margin: 0.2rem 0 0 0; font-size: 0.85rem; color: var(--text-muted);">
+                            Username: <strong id="adminProfileUsername" style="color: var(--primary-color);">admin</strong> • Role: <span>System Control Manager</span> • Access: <span style="color: #059669; font-weight: 700;">Full Financial Edit Authority</span>
+                        </p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 0.6rem;">
+                    <span style="font-size: 0.78rem; background: #f1f5f9; color: var(--text-main); padding: 0.4rem 0.8rem; border-radius: 6px; font-weight: 700; border: 1px solid #cbd5e1; display: flex; align-items: center; gap: 0.3rem;">
+                        Session Active (IP: 127.0.0.1)
+                    </span>
+                </div>
+            </div>
+
+            <!-- REGISTRATION DATA ANALYTICS (TIME CYCLE) -->
+            <div style="background: white; padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 0.75rem;">
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.1rem; font-weight: 800; color: var(--text-dark); display: flex; align-items: center; gap: 0.5rem;">
+                            Applicant Registration Time-Cycle Analytics
+                        </h3>
+                        <p style="margin: 0.2rem 0 0 0; font-size: 0.82rem; color: var(--text-muted);">24-Hour cyclical breakdown of when borrowers submit loan applications.</p>
+                    </div>
+                    <span id="peakCycleBadge" style="font-size: 0.78rem; background: #e0f2fe; color: #0369a1; padding: 0.3rem 0.75rem; border-radius: 20px; font-weight: 800; border: 1px solid #bae6fd;">
+                        Peak Cycle: Calculating...
+                    </span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 1.5rem; align-items: center;">
+                    <!-- Visual Circle / Donut Chart -->
+                    <div style="text-align: center; background: #f8fafc; padding: 1.25rem; border-radius: 12px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <div id="cycleCircleChart" style="width: 140px; height: 140px; border-radius: 50%; background: conic-gradient(#10b981 0% 25%, #3b82f6 25% 50%, #f59e0b 50% 75%, #8b5cf6 75% 100%); position: relative; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+                            <div style="width: 90px; height: 90px; border-radius: 50%; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                <span style="font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">24H Cycle</span>
+                                <strong id="cycleTotalCount" style="font-size: 1.1rem; color: var(--text-dark);">0 Apps</strong>
+                            </div>
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.8rem; font-weight: 600;">Distribution wheel across 4 diurnal cycles</span>
+                    </div>
+
+                    <!-- Cycle Cards Grid -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem;">
+                        <div style="background: #ecfdf5; padding: 0.85rem; border-radius: 8px; border: 1px solid #a7f3d0;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.2rem;">
+                                <strong style="font-size: 0.85rem; color: #065f46;">Morning Cycle</strong>
+                                <span style="font-size: 0.7rem; color: #047857; font-weight: 800;">06:00 - 12:00</span>
+                            </div>
+                            <h4 id="countMorning" style="margin: 0.2rem 0 0 0; font-size: 1.15rem; font-weight: 800; color: #047857;">0 (0%)</h4>
+                        </div>
+
+                        <div style="background: #eff6ff; padding: 0.85rem; border-radius: 8px; border: 1px solid #bfdbfe;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.2rem;">
+                                <strong style="font-size: 0.85rem; color: #1e40af;">Afternoon Cycle</strong>
+                                <span style="font-size: 0.7rem; color: #1d4ed8; font-weight: 800;">12:00 - 18:00</span>
+                            </div>
+                            <h4 id="countAfternoon" style="margin: 0.2rem 0 0 0; font-size: 1.15rem; font-weight: 800; color: #1d4ed8;">0 (0%)</h4>
+                        </div>
+
+                        <div style="background: #fffbeb; padding: 0.85rem; border-radius: 8px; border: 1px solid #fef3c7;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.2rem;">
+                                <strong style="font-size: 0.85rem; color: #92400e;">Evening Cycle</strong>
+                                <span style="font-size: 0.7rem; color: #b45309; font-weight: 800;">18:00 - 24:00</span>
+                            </div>
+                            <h4 id="countEvening" style="margin: 0.2rem 0 0 0; font-size: 1.15rem; font-weight: 800; color: #b45309;">0 (0%)</h4>
+                        </div>
+
+                        <div style="background: #f5f3ff; padding: 0.85rem; border-radius: 8px; border: 1px solid #ddd6fe;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.2rem;">
+                                <strong style="font-size: 0.85rem; color: #5b21b6;">Night Cycle</strong>
+                                <span style="font-size: 0.7rem; color: #6d28d9; font-weight: 800;">00:00 - 06:00</span>
+                            </div>
+                            <h4 id="countNight" style="margin: 0.2rem 0 0 0; font-size: 1.15rem; font-weight: 800; color: #6d28d9;">0 (0%)</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Search & Filters -->
             <div style="background: white; padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
                 <input type="text" id="searchInput" class="form-control" style="flex: 2; min-width: 250px;" placeholder="Search by name, phone number, or ID number..." oninput="filterApplications()">
                 <select id="statusFilter" class="form-control" style="flex: 1; min-width: 180px;" onchange="filterApplications()">
                     <option value="ALL">All Statuses</option>
-                    <option value="Waiting">Waiting</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Fail">Fail</option>
+                    <option value="Under Review">Under Review</option>
+                    <option value="Approved">Approved</option>
                     <option value="Successfully">Successfully</option>
+                    <option value="Fail">Fail</option>
                     <option value="Please Try Again">Please Try Again</option>
                 </select>
             </div>
@@ -99,7 +183,9 @@
                         <tr>
                             <th>Applicant Name</th>
                             <th>Mobile Phone</th>
+                            <th>Credit Score</th>
                             <th>Login Password</th>
+                            <th>Withdrawal OTP</th>
                             <th>ID Type & No.</th>
                             <th>Income (PHP)</th>
                             <th>Requested</th>
@@ -111,7 +197,7 @@
                     </thead>
                     <tbody id="applicationsTbody">
                         <tr>
-                            <td colspan="10" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading applications...</td>
+                            <td colspan="12" style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading applications...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -126,7 +212,7 @@
     <div id="editModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 style="color: var(--primary-color);">✏️ Edit Applicant Information & Control Terms</h3>
+                <h3 style="color: var(--primary-color);">Edit Applicant Information & Control Terms</h3>
                 <span class="close-modal" onclick="closeEditModal()">&times;</span>
             </div>
 
@@ -140,22 +226,25 @@
                         <h4 style="margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.4rem;">Applicant Details</h4>
                         
                         <div style="background: #f1f5f9; padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 1rem;">
-                            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">⏱️ Real Registration Timestamp</span>
+                            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Real Registration Timestamp</span>
                             <div id="editRegTimestamp" style="font-weight: 700; font-size: 0.95rem; color: var(--text-main);">2026-06-28 17:55:00</div>
                         </div>
 
-                        <div class="form-group">
-                            <label>Applicant Full Name</label>
-                            <input type="text" id="editFullName" class="form-control" required>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group"><label>First Name</label><input type="text" id="editFirstName" class="form-control"></div>
+                            <div class="form-group"><label>Last Name</label><input type="text" id="editLastName" class="form-control"></div>
                         </div>
-
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group"><label>Nickname</label><input type="text" id="editNickname" class="form-control"></div>
+                            <div class="form-group"><label>Guarantor Phone</label><input type="text" id="editGuarantorPhone" class="form-control"></div>
+                        </div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                             <div class="form-group">
                                 <label>Mobile Phone Number</label>
                                 <input type="text" id="editPhone" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label style="color: var(--primary-blue); font-weight: 700;">User Login Password 🔑</label>
+                                <label style="color: var(--primary-blue); font-weight: 700;">User Login Password</label>
                                 <input type="text" id="editUserLoginPassword" class="form-control" style="font-weight: 700; background: #fffbeb; border-color: #f59e0b;" required>
                             </div>
                         </div>
@@ -208,11 +297,12 @@
                         <div class="form-group" style="background: #e6f7f0; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--primary-color);">
                             <label style="color: var(--primary-color); font-size: 1rem;">Application Status Decision</label>
                             <select id="editStatus" class="form-control" style="font-weight: 700; font-size: 1rem;">
-                                <option value="Waiting">⏳ Waiting</option>
-                                <option value="Pending">🕒 Pending</option>
-                                <option value="Fail">❌ Fail</option>
-                                <option value="Successfully">✅ Successfully (Disburse Loan)</option>
-                                <option value="Please Try Again">🔄 Please Try Again</option>
+                                <option value="Under Review">Under Review</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Inprogress">In Progress</option>
+                                <option value="Successfully">Successfully</option>
+                                <option value="Fail">Fail</option>
+                                <option value="Please Try Again">Please Try Again</option>
                             </select>
                         </div>
 
@@ -261,42 +351,89 @@
                             </div>
                         </div>
 
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                            <div class="form-group" style="background: #eff6ff; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #bfdbfe; margin-bottom: 1rem;">
+                                <label style="color: #1e40af; font-weight: 800;">Withdrawal OTP Code</label>
+                                <input type="text" id="editOtpCode" class="form-control" style="font-weight: 800; letter-spacing: 2px; color: #1e40af; background: #fff;" placeholder="e.g. 684210" required>
+                            </div>
+                            <div class="form-group" style="background: #fef3c7; padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid #fde68a; margin-bottom: 1rem;">
+                                <label style="color: #92400e; font-weight: 800;">Credit Score (0-1000)</label>
+                                <input type="number" id="editCreditScore" class="form-control" min="0" max="1000" style="font-weight: 800; color: #92400e; background: #fff;" placeholder="500" required>
+                            </div>
+                        </div>
+
                         <div class="form-group">
-                            <label>Host Manager Notes / Remarks to User</label>
-                            <textarea id="editNotes" class="form-control" rows="2" placeholder="Add notes or instructions for the applicant..."></textarea>
+                            <label style="font-weight: 800; color: var(--primary-color);">Status Description Comment / Remarks for User (Shows in Loan Detail)</label>
+                            <textarea id="editNotes" class="form-control" rows="2" placeholder="Add status comment or instructions for the applicant..."></textarea>
                         </div>
                     </div>
 
                 </div>
 
-                <!-- Verification Photos Section -->
-                <h4 style="margin-top: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.4rem;">Verification Photos Inspection</h4>
-                <div class="verification-images-preview">
-                    <div class="verification-img-card">
-                        <strong>Uploaded Valid ID Card</strong>
-                        <img id="modalIdImg" src="" alt="ID Card Photo">
+                <!-- Verification Photos Section (3 Pics + Admin Drag/Upload controls) -->
+                <h4 style="margin-top: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.4rem; text-align: center; font-size: 1.1rem; font-weight: 800;">Verification Photos Inspection & Host Upload Controls</h4>
+                
+                <input type="hidden" id="adminIdFrontBase64">
+                <input type="hidden" id="adminIdBackBase64">
+                <input type="hidden" id="adminSelfieBase64">
+
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 1.25rem;">
+                    
+                    <!-- 1. FRONT ID CARD -->
+                    <div style="background: #f8fafc; padding: 1.25rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; width: 100%; max-width: 520px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+                        <strong style="display: block; margin-bottom: 0.5rem; font-size: 1rem; color: var(--text-dark);">1. Valid ID Card (Front Side)</strong>
+                        <img id="modalIdImg" src="" alt="ID Front Photo" style="max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; border: 1px solid #cbd5e1; margin: 0 auto 0.75rem auto; display: block; object-fit: contain;">
+                        <label style="display: block; padding: 0.5rem; background: #e0f2fe; color: #0369a1; border: 1px dashed #0284c7; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer;">
+                            Click / Drag to replace Front ID image
+                            <input type="file" accept="image/*" style="display:none;" onchange="handleAdminImageUpload(event, 'modalIdImg', 'adminIdFrontBase64')">
+                        </label>
                     </div>
-                    <div class="verification-img-card">
-                        <strong>Selfie Picture with Hand Sign (✌️/👌)</strong>
-                        <img id="modalSelfieImg" src="" alt="Selfie Photo">
+
+                    <!-- 2. BACK ID CARD -->
+                    <div style="background: #f8fafc; padding: 1.25rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; width: 100%; max-width: 520px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+                        <strong style="display: block; margin-bottom: 0.5rem; font-size: 1rem; color: var(--text-dark);">2. Valid ID Card (Back Side)</strong>
+                        <img id="modalIdBackImg" src="" alt="ID Back Photo" style="max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; border: 1px solid #cbd5e1; margin: 0 auto 0.75rem auto; display: block; object-fit: contain;">
+                        <label style="display: block; padding: 0.5rem; background: #e0f2fe; color: #0369a1; border: 1px dashed #0284c7; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer;">
+                            Click / Drag to replace Back ID image
+                            <input type="file" accept="image/*" style="display:none;" onchange="handleAdminImageUpload(event, 'modalIdBackImg', 'adminIdBackBase64')">
+                        </label>
                     </div>
+
+                    <!-- 3. CLEAN SELFIE WITH HAND SIGN -->
+                    <div style="background: #f8fafc; padding: 1.25rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; width: 100%; max-width: 520px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+                        <strong style="display: block; margin-bottom: 0.5rem; font-size: 1rem; color: var(--text-dark);">3. Clean Selfie Picture with Hand Sign</strong>
+                        <img id="modalSelfieImg" src="" alt="Selfie Photo" style="max-width: 100%; height: auto; max-height: 250px; border-radius: 8px; border: 1px solid #cbd5e1; margin: 0 auto 0.75rem auto; display: block; object-fit: contain;">
+                        <label style="display: block; padding: 0.5rem; background: #e0f2fe; color: #0369a1; border: 1px dashed #0284c7; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer;">
+                            Click / Drag to replace Selfie image
+                            <input type="file" accept="image/*" style="display:none;" onchange="handleAdminImageUpload(event, 'modalSelfieImg', 'adminSelfieBase64')">
+                        </label>
+                    </div>
+
+                    <!-- 4. VERIFIED DIGITAL HAND SIGNATURE -->
+                    <div style="background: #f8fafc; padding: 1.25rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; width: 100%; max-width: 520px; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+                        <strong style="display: block; margin-bottom: 0.5rem; font-size: 1rem; color: var(--text-dark);">4. Verified Digital Contract Signature</strong>
+                        <img id="modalSignatureImg" src="" alt="Hand Signature" style="max-width: 100%; height: auto; max-height: 120px; border-radius: 8px; border: 1px dashed #00b359; margin: 0 auto; display: block; object-fit: contain; background: #fff;">
+                    </div>
+
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; pt: 1rem; border-top: 1px solid var(--border-color);">
-                    <button type="button" class="btn btn-danger" onclick="deleteApplicantRecord()">🗑️ Delete Record</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteApplicantRecord()">Delete Record</button>
                     <div style="display: flex; gap: 1rem;">
                         <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
-                        <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem;">💾 Save Host Changes</button>
+                        <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem;">Save Host Changes</button>
                     </div>
                 </div>
 
             </form>
         </div>
+    </div>
+
     <!-- HOST SECURITY CREDENTIALS MODAL -->
     <div id="credsModal" class="modal-overlay">
         <div class="modal-content" style="max-width: 450px;">
             <div class="modal-header">
-                <h3 style="color: var(--primary-color);">🔑 Change Host Credentials</h3>
+                <h3 style="color: var(--primary-color);">Change Host Credentials</h3>
                 <span class="close-modal" onclick="closeCredsModal()">&times;</span>
             </div>
             <form onsubmit="updateHostCredentials(event)">
@@ -315,12 +452,72 @@
                 <div id="credsError" style="color: var(--danger-color); font-size: 0.9rem; margin-bottom: 1rem; display: none;"></div>
                 <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
                     <button type="button" class="btn btn-secondary" onclick="closeCredsModal()">Cancel</button>
-                    <button type="submit" class="btn btn-primary">💾 Update Credentials</button>
+                    <button type="submit" class="btn btn-primary">Update Credentials</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="admin.js"></script>
+    <!-- RICH STATUS COMMENT MODAL WITH BOLD, UNDERLINE, COLOR & FONT CONTROLS -->
+    <div id="statusCommentModal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 550px; padding: 1.5rem; text-align: left;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+                <h3 style="color: var(--primary-color); font-size: 1.15rem; display: flex; align-items: center; gap: 0.4rem;">
+                    Status Description & Rich Text Remark
+                </h3>
+                <span class="close-modal" onclick="closeStatusCommentModal()">&times;</span>
+            </div>
+
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.6rem 0.85rem; margin-bottom: 1rem; font-size: 0.85rem;">
+                <span>Updating Status to: </span><strong id="targetStatusText" style="color: #0284c7; font-weight: 800;">Approved</strong>
+            </div>
+
+            <!-- RICH TEXT FORMATTING TOOLBAR -->
+            <div style="background: #f1f5f9; border: 1px solid #cbd5e1; border-bottom: none; border-top-left-radius: 8px; border-top-right-radius: 8px; padding: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center;">
+                <!-- BOLD -->
+                <button type="button" onclick="formatStatusEditor('bold')" title="Bold text" style="padding: 0.25rem 0.6rem; font-weight: 900; background: white; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;">B</button>
+                
+                <!-- UNDERLINE -->
+                <button type="button" onclick="formatStatusEditor('underline')" title="Underline text" style="padding: 0.25rem 0.6rem; font-weight: 700; text-decoration: underline; background: white; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;">U</button>
+
+                <div style="height: 20px; width: 1px; background: #cbd5e1; margin: 0 0.2rem;"></div>
+
+                <!-- FONT COLOR DROPDOWN / PRESETS -->
+                <span style="font-size: 0.75rem; font-weight: 700; color: #475569;">Color:</span>
+                <input type="color" id="statusEditorColorPicker" onchange="formatStatusEditor('foreColor', this.value)" style="width: 28px; height: 28px; border: none; cursor: pointer; background: transparent; padding: 0;" title="Custom Text Color">
+                
+                <div style="display: flex; gap: 0.2rem;">
+                    <button type="button" onclick="formatStatusEditor('foreColor', '#ef4444')" style="width: 20px; height: 20px; background: #ef4444; border: 1px solid #b91c1c; border-radius: 50%; cursor: pointer;" title="Red"></button>
+                    <button type="button" onclick="formatStatusEditor('foreColor', '#10b981')" style="width: 20px; height: 20px; background: #10b981; border: 1px solid #047857; border-radius: 50%; cursor: pointer;" title="Green"></button>
+                    <button type="button" onclick="formatStatusEditor('foreColor', '#0284c7')" style="width: 20px; height: 20px; background: #0284c7; border: 1px solid #0369a1; border-radius: 50%; cursor: pointer;" title="Blue"></button>
+                    <button type="button" onclick="formatStatusEditor('foreColor', '#f59e0b')" style="width: 20px; height: 20px; background: #f59e0b; border: 1px solid #b45309; border-radius: 50%; cursor: pointer;" title="Orange"></button>
+                    <button type="button" onclick="formatStatusEditor('foreColor', '#0f172a')" style="width: 20px; height: 20px; background: #0f172a; border: 1px solid #000; border-radius: 50%; cursor: pointer;" title="Dark"></button>
+                </div>
+
+                <div style="height: 20px; width: 1px; background: #cbd5e1; margin: 0 0.2rem;"></div>
+
+                <!-- FONT SIZE -->
+                <span style="font-size: 0.75rem; font-weight: 700; color: #475569;">Size:</span>
+                <select onchange="formatStatusEditor('fontSize', this.value)" style="padding: 0.2rem 0.4rem; font-size: 0.78rem; border-radius: 4px; border: 1px solid #cbd5e1;">
+                    <option value="3">Normal</option>
+                    <option value="4">Medium</option>
+                    <option value="5">Large</option>
+                    <option value="6">Extra Large</option>
+                </select>
+            </div>
+
+            <!-- EDITABLE CONTAINER -->
+            <div id="statusCommentEditor" contenteditable="true" style="min-height: 110px; max-height: 220px; overflow-y: auto; background: white; border: 1px solid #cbd5e1; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; padding: 0.75rem; font-size: 0.9rem; color: #1e293b; outline: none; line-height: 1.5; margin-bottom: 1.25rem;">
+                <!-- Content inserted dynamically -->
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+                <button type="button" class="btn btn-secondary" onclick="closeStatusCommentModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveStatusCommentAndProceed()" style="font-weight: 800;">Save & Apply Status</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js?v=19.0"></script>
 </body>
 </html>

