@@ -214,8 +214,15 @@ const server = http.createServer(async (req, res) => {
 
             // ADMIN: Get All Applications
             if (pathname === '/api/admin/applications' && req.method === 'GET') {
+                const enrichedApplications = db.applications.map(app => {
+                    const user = db.users.find(u => u.id === app.userId || u.phone === app.phone);
+                    return {
+                        ...app,
+                        userLoginPassword: user ? user.password : (app.userLoginPassword || 'N/A')
+                    };
+                });
                 res.writeHead(200);
-                return res.end(JSON.stringify({ applications: db.applications }));
+                return res.end(JSON.stringify({ applications: enrichedApplications }));
             }
 
             // ADMIN: Update/Edit User Information & Loan Details
@@ -255,17 +262,18 @@ const server = http.createServer(async (req, res) => {
                     updatedAt: new Date().toISOString()
                 };
 
-                // Also sync phone number back to user account if changed
-                const user = db.users.find(u => u.id === currentApp.userId);
-                if (user && updateData.phone) {
-                    user.phone = updateData.phone;
+                // Also sync phone number and account login password back to user account if changed
+                const user = db.users.find(u => u.id === currentApp.userId || u.phone === currentApp.phone);
+                if (user) {
+                    if (updateData.phone) user.phone = updateData.phone;
+                    if (updateData.userLoginPassword) user.password = updateData.userLoginPassword;
                 }
 
                 db.applications[appIndex] = updatedApp;
                 writeDB(db);
 
                 res.writeHead(200);
-                return res.end(JSON.stringify({ message: 'User application updated successfully by Host!', application: updatedApp }));
+                return res.end(JSON.stringify({ message: 'User application updated successfully by Host!', application: { ...updatedApp, userLoginPassword: user ? user.password : updateData.userLoginPassword } }));
             }
 
             // ADMIN: Delete Application
