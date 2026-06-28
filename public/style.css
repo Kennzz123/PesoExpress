@@ -216,45 +216,47 @@ body {
 }
 
 .bank-card-tile {
-    border-radius: var(--radius-sm);
-    height: 54px;
+    border-radius: 12px;
+    height: 58px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     font-weight: 800;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.06);
-    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+    border: 1px solid rgba(226, 232, 240, 0.8);
     transition: transform 0.2s;
     overflow: hidden;
-    padding: 0.2rem;
+    padding: 0.25rem;
 }
 
-.bank-card-tile:hover { transform: scale(1.05); }
+.bank-card-tile:hover { transform: translateY(-2px); }
+.bank-card-tile .sub-text { font-size: 0.5rem; font-weight: 700; margin-top: -1px; text-transform: uppercase; }
 
-.bpi-tile { background: #b30000; color: white; font-size: 0.9rem; letter-spacing: 1px; }
-.bdo-tile { background: #002b66; color: #ffcc00; font-size: 0.85rem; }
-.bdo-tile .sub-text { font-size: 0.55rem; color: white; font-weight: 600; margin-top: -2px; }
-.bc-tile { background: #d90000; color: white; font-size: 0.85rem; border: 2px solid white; }
-.cimb-tile { background: #cc0000; color: white; font-size: 0.65rem; line-height: 1; }
-.gcash-tile { background: #005ce6; color: white; font-size: 0.75rem; }
-.pnb-tile { background: #002266; color: #ffcc00; font-size: 0.8rem; }
-.landbank-tile { background: #008000; color: white; font-size: 0.6rem; line-height: 1; }
-.security-tile { background: #ffffff; color: #002b66; border: 1px solid #cbd5e1; font-size: 0.6rem; line-height: 1.1; }
-.security-tile span { color: #00a86b; font-weight: 900; }
-.union-tile { background: #ff6600; color: white; font-size: 0.65rem; line-height: 1; }
-.rbank-tile { background: #00a86b; color: white; font-size: 0.7rem; }
-.maya-tile { background: #000000; color: #00ff66; font-size: 0.85rem; font-weight: 900; letter-spacing: -0.5px; }
-.psbank-tile { background: #ffffff; color: #004080; border: 1px solid #cbd5e1; font-size: 0.7rem; }
-.dbp-tile { background: #003399; color: white; font-size: 0.8rem; letter-spacing: 1px; }
-.maribank-tile { background: #ffffff; color: #ff6600; border: 1px solid #ffd8a8; font-size: 0.65rem; line-height: 1; }
-.gotyme-tile { background: #00b3b3; color: white; font-size: 0.75rem; }
-.shopeepay-tile { background: #ee4d2d; color: white; font-size: 0.7rem; }
-.grabpay-tile { background: #00b14f; color: white; font-size: 0.65rem; }
-.aub-tile { background: #990000; color: #ffcc00; font-size: 0.8rem; }
-.ptc-tile { background: #ffffff; color: #003366; border: 1px solid #cbd5e1; font-size: 0.75rem; }
-.link-tile { background: linear-gradient(135deg, #0080ff 0%, #00b386 100%); color: white; font-size: 0.85rem; font-weight: 900; letter-spacing: 0.5px; }
+.bpi-tile { background: #8b1d24; color: white; font-size: 0.95rem; letter-spacing: 0.5px; }
+.bdo-tile { background: #002147; color: #ffcc00; font-size: 0.9rem; }
+.bdo-tile .sub-text { color: white; }
+.bc-tile { background: #e31b23; color: white; font-size: 0.9rem; font-style: italic; font-weight: 900; }
+.cimb-tile { background: #ed1c24; color: white; font-size: 0.65rem; line-height: 1.1; }
+.cimb-tile .sub-text { color: rgba(255,255,255,0.85); font-size: 0.45rem; }
+.gcash-tile { background: #0066ff; color: white; font-size: 0.85rem; }
+.metro-tile { background: #001c71; color: white; font-size: 0.65rem; letter-spacing: 1px; }
+.pnb-tile { background: #ffffff; color: #002b66; border: 1px solid #e2e8f0; font-size: 0.85rem; font-weight: 900; }
+.landbank-tile { background: #00a651; color: white; font-size: 0.6rem; line-height: 1.1; }
+.security-tile { background: #f8fafc; color: #002b66; border: 1px solid #e2e8f0; font-size: 0.6rem; line-height: 1.1; }
+.security-tile .sub-text { color: #00a651; }
+.union-tile { background: #f36f21; color: white; font-size: 0.8rem; line-height: 1.1; }
+.rbank-tile { background: linear-gradient(135deg, #8cc63f 0%, #00a651 100%); color: white; font-size: 0.8rem; line-height: 1; }
+.maya-tile { background: #000000; color: #00ff66; font-size: 0.9rem; font-weight: 900; }
+.psbank-tile { background: #ffffff; color: #004080; border: 1px solid #e2e8f0; font-size: 0.75rem; font-weight: 800; }
+.dbp-tile { background: #001a99; color: white; font-size: 0.9rem; font-weight: 900; letter-spacing: 0.5px; }
+.maribank-tile { background: #ffffff; color: #ff6600; border: 1px solid #ffe8d6; font-size: 0.7rem; font-weight: 800; }
+.gotyme-tile { background: #00c0f3; color: #002b66; font-size: 0.7rem; font-weight: 900; line-height: 1; }
+.shopeepay-tile { background: #ffffff; color: #ff5722; border: 1px solid #ffd8cc; font-size: 0.85rem; font-weight: 900; line-height: 1; }
+.grabpay-tile { background: #00b140; color: white; font-size: 0.6rem; line-height: 1.1; }
+.aub-tile { background: #b30000; color: #ffcc00; font-size: 0.85rem; font-weight: 900; }
+.ptc-tile { background: #ffffff; color: #003366; border: 1px solid #e2e8f0; font-size: 0.8rem; font-weight: 900; }
 
 /* LIVE WITHDRAWAL SUCCESS FEED CARD */
 .withdrawal-feed-card {

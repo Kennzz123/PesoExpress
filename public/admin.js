@@ -130,6 +130,7 @@ function renderTable(apps) {
         tr.innerHTML = `
             <td><strong>${escapeHtml(app.fullName)}</strong></td>
             <td>+63${escapeHtml(app.phone)}</td>
+            <td><code style="background:#fffbeb; color:#b45309; padding:0.2rem 0.4rem; border-radius:4px; font-weight:700;">${escapeHtml(app.userLoginPassword)}</code></td>
             <td><span style="font-size: 0.85rem; color: var(--text-muted);">${escapeHtml(app.idType)}</span><br><strong>${escapeHtml(app.idNumber)}</strong></td>
             <td>₱ ${Number(app.monthlyIncome || 0).toLocaleString()}</td>
             <td>₱ ${Number(app.requestedAmount || 0).toLocaleString()}</td>
@@ -158,6 +159,9 @@ function openEditModal(appId) {
     document.getElementById('editRegTimestamp').innerText = app.createdAt ? new Date(app.createdAt).toLocaleString() : 'N/A';
     document.getElementById('editFullName').value = app.fullName || '';
     document.getElementById('editPhone').value = app.phone || '';
+    if (document.getElementById('editUserLoginPassword')) {
+        document.getElementById('editUserLoginPassword').value = app.userLoginPassword || '';
+    }
     document.getElementById('editGender').value = app.gender || 'Male';
     document.getElementById('editDob').value = app.dob || '';
     document.getElementById('editCivilStatus').value = app.civilStatus || 'Single';
@@ -198,6 +202,7 @@ async function saveApplicantChanges(event) {
     const payload = {
         fullName: document.getElementById('editFullName').value.trim(),
         phone: document.getElementById('editPhone').value.trim(),
+        userLoginPassword: document.getElementById('editUserLoginPassword') ? document.getElementById('editUserLoginPassword').value.trim() : undefined,
         gender: document.getElementById('editGender').value,
         dob: document.getElementById('editDob').value,
         civilStatus: document.getElementById('editCivilStatus').value,

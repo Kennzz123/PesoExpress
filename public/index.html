@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PesoExpress 🇵🇭</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%2300b359'/><circle cx='50' cy='50' r='38' fill='%23ffcc00'/><text x='50' y='67' font-size='50' font-weight='900' text-anchor='middle' fill='%23004c99'>₱</text></svg>">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2.0">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -215,61 +215,68 @@
                     <!-- GREEN GRADIENT WALLET CARD -->
                     <div class="wallet-gradient-card">
                         <div class="wallet-balance-header">
-                            <div class="wallet-circle-icon">👛</div>
+                            <div class="wallet-circle-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                            </div>
                             <div class="wallet-balance-text">
                                 <span>Account balance</span>
-                                <h2 id="dashApprovedAmount">0</h2>
+                                <h2 id="dashApprovedAmount">0 PHP</h2>
                             </div>
                         </div>
 
                         <div class="wallet-row-pill">
                             <div style="display: flex; align-items: center; gap: 0.6rem;">
-                                <span>💵</span> <span>Withdraw balance</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="2"></circle></svg>
+                                <span>Withdraw balance</span>
                             </div>
-                            <strong style="color: #ff3333; font-size: 1.1rem;">0</strong>
+                            <strong style="color: #ff3333; font-size: 1.1rem;" id="dashWithdrawBalance">0 PHP</strong>
                         </div>
 
                         <div class="wallet-row-pill">
                             <div style="display: flex; align-items: center; gap: 0.6rem;">
-                                <span>✅</span> <span>Order Status</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                                <span>Order Status</span>
                             </div>
                             <span id="dashStatusBadge" class="badge badge-pending" style="font-size: 0.75rem;">Waiting</span>
                         </div>
 
                         <div class="wallet-buttons-grid">
                             <button class="btn-wallet-light" onclick="switchMobileTab('apply')">
-                                👁️ Loan Detail
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> Loan Detail
                             </button>
                             <button id="withdrawActionBtn" class="btn-wallet-dark" onclick="processLoanWithdrawal()">
-                                ➤ Withdraw
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg> Withdraw
                             </button>
                         </div>
                     </div>
 
                     <!-- SUPPORTED BANKS CARD -->
                     <div class="supported-banks-card">
-                        <h4>🏛️ Supported Banks</h4>
+                        <h4>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00b359" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 22 7 12 2"></polygon><line x1="2" y1="17" x2="22" y2="17"></line><line x1="5" y1="7" x2="5" y2="17"></line><line x1="9" y1="7" x2="9" y2="17"></line><line x1="15" y1="7" x2="15" y2="17"></line><line x1="19" y1="7" x2="19" y2="17"></line></svg>
+                            Supported Banks
+                        </h4>
                         <div class="banks-grid">
                             <div class="bank-card-tile bpi-tile">BPI</div>
                             <div class="bank-card-tile bdo-tile"><div>BDO</div><div class="sub-text">Unibank</div></div>
                             <div class="bank-card-tile bc-tile">BC</div>
-                            <div class="bank-card-tile cimb-tile">CIMB BANK</div>
+                            <div class="bank-card-tile cimb-tile"><div>CIMB BANK</div><div class="sub-text">PHILIPPINES</div></div>
                             <div class="bank-card-tile gcash-tile">GCash</div>
+                            <div class="bank-card-tile metro-tile">METRO</div>
                             <div class="bank-card-tile pnb-tile">PNB</div>
-                            <div class="bank-card-tile landbank-tile">LANDBANK</div>
-                            <div class="bank-card-tile security-tile"><span>S</span>ECURITY</div>
-                            <div class="bank-card-tile union-tile">UB UnionBank</div>
-                            <div class="bank-card-tile rbank-tile">R BANK</div>
+                            <div class="bank-card-tile landbank-tile"><div>LANDBANK</div><div class="sub-text">Pay</div></div>
+                            <div class="bank-card-tile security-tile"><div>SECURITY</div><div class="sub-text">BANK</div></div>
+                            <div class="bank-card-tile union-tile"><div>UB</div><div class="sub-text">UnionBank</div></div>
+                            <div class="bank-card-tile rbank-tile"><div>R</div><div class="sub-text">BANK</div></div>
                             <div class="bank-card-tile maya-tile">maya</div>
                             <div class="bank-card-tile psbank-tile">PSBank</div>
                             <div class="bank-card-tile dbp-tile">DBP</div>
                             <div class="bank-card-tile maribank-tile">MariBank</div>
-                            <div class="bank-card-tile gotyme-tile">GoTyme</div>
-                            <div class="bank-card-tile shopeepay-tile">S Pay</div>
-                            <div class="bank-card-tile grabpay-tile">GrabPay</div>
+                            <div class="bank-card-tile gotyme-tile"><div>GOtyme</div><div class="sub-text">bank</div></div>
+                            <div class="bank-card-tile shopeepay-tile"><div>S</div><div class="sub-text">Pay</div></div>
+                            <div class="bank-card-tile grabpay-tile"><div>GrabPay</div><div class="sub-text">MERCHANT</div></div>
                             <div class="bank-card-tile aub-tile">AUB</div>
                             <div class="bank-card-tile ptc-tile">PTC</div>
-                            <div class="bank-card-tile link-tile">LINK</div>
                         </div>
                     </div>
 
@@ -537,6 +544,6 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=2.0"></script>
 </body>
 </html>

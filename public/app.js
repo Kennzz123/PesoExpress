@@ -371,7 +371,10 @@ async function loadUserApplication() {
             populateOverviewAndBankViews(currentApp);
             showApplicationForm(true);
         } else {
-            document.getElementById('dashApprovedAmount').innerText = '0';
+            document.getElementById('dashApprovedAmount').innerText = '0 PHP';
+            if (document.getElementById('dashWithdrawBalance')) {
+                document.getElementById('dashWithdrawBalance').innerText = '0 PHP';
+            }
             document.getElementById('dashStatusBadge').innerText = 'Waiting';
             document.getElementById('dashStatusBadge').className = 'badge badge-pending';
             document.getElementById('dashNotes').innerText = 'Tap "Apply Now" to submit your loan application.';
@@ -383,7 +386,12 @@ async function loadUserApplication() {
 
 function populateOverviewAndBankViews(app) {
     const approvedAmt = app.approvedAmount || app.requestedAmount || 0;
-    document.getElementById('dashApprovedAmount').innerText = Number(approvedAmt).toLocaleString();
+    const formattedAmt = Number(approvedAmt).toLocaleString() + ' PHP';
+    
+    document.getElementById('dashApprovedAmount').innerText = formattedAmt;
+    if (document.getElementById('dashWithdrawBalance')) {
+        document.getElementById('dashWithdrawBalance').innerText = app.status === 'Successfully' || app.status === 'Approved' ? formattedAmt : '0 PHP';
+    }
 
     const statusBadge = document.getElementById('dashStatusBadge');
     statusBadge.innerText = app.status || 'Waiting';
